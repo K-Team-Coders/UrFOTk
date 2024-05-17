@@ -1,37 +1,32 @@
-from fastapi import FastAPI, Depends, HTTPException
+import shutil
+from pathlib import Path
+from typing import List
+from loguru import logger
+from fastapi import FastAPI, Depends, HTTPException, UploadFile
 from sqlalchemy.orm import Session
-from fastApi.database import crud, models, schema
-from fastApi.database.connect import SessionLocal, engine, get_db
 
-models.Base.metadata.create_all(bind=engine)
+from fastApi.database import crud, models, schema
+from fastApi.database.connect import engine, get_db
+
+# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
-@app.post("/trudovaya_knizhka/", response_model=schema.TrudovayaKnizhka)
-def create_trudovaya_knizhka(trudovaya_knizhka: schema.TrudovayaKnizhkaCreate, db: Session = Depends(get_db)):
-    return crud.create_trudovaya_knizhka(db=db, trudovaya_knizhka=trudovaya_knizhka)
-
-
-@app.get("/trudovaya_knizhka/", response_model=list[schema.TrudovayaKnizhka])
-def read_trudovaya_knizhki(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    trudovaya_knizhki = crud.get_trudovaya_knizhki(db, skip=skip, limit=limit)
-    return trudovaya_knizhki
+# Путь для сохранения загруженных файлов
+UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
-@app.get("/trudovaya_knizhka/{trudovaya_knizhka_id}", response_model=schema.TrudovayaKnizhka)
-def read_trudovaya_knizhka(trudovaya_knizhka_id: int, db: Session = Depends(get_db)):
-    db_trudovaya_knizhka = crud.get_trudovaya_knizhka(db, trudovaya_knizhka_id=trudovaya_knizhka_id)
-    if db_trudovaya_knizhka is None:
-        raise HTTPException(status_code=404, detail="Trudovaya Knizhka not found")
-    return db_trudovaya_knizhka
+@app.post("/uploadfiles/")
+async def upload_files(file: UploadFile):
+    logger.info(file.filename)
 
+    logger.info(f"Uploading {file.filename}")
+    # Полный путь для сохранения файла
+    file_location = UPLOAD_DIR / file.filename
 
-@app.post("/trudovaya_knizhka/{trudovaya_knizhka_id}/work_info/", response_model=schema.WorkInfo)
-def create_work_info(trudovaya_knizhka_id: int, work_info: schema.WorkInfoCreate, db: Session = Depends(get_db)):
-    return crud.create_work_info(db=db, work_info=work_info, trudovaya_knizhka_id=trudovaya_knizhka_id)
+    # Сохранение файла на сервере
+    with file_location.open("wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
-
-@app.post("/trudovaya_knizhka/{trudovaya_knizhka_id}/award_info/", response_model=schema.AwardInfo)
-def create_award_info(trudovaya_knizhka_id: int, award_info: schema.AwardInfoCreate, db: Session = Depends(get_db)):
-    return crud.create_award_info(db=db, award_info=award_info, trudovaya_knizhka_id=trudovaya_knizhka_id)
+    return {"info": f"{file.filename} files saved successfully"}

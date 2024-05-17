@@ -2,43 +2,47 @@ version: '3.7'
 
 services:
 
-  frontend:
-    restart: always
-    container_name: frontend
-    env_file: 
-      - ./frontend/.env
-    build:
-      context: ./frontend
-    ports:
-      - 8080:8080
-    expose:
-      - 8080
+#  frontend:
+#    restart: always
+#    container_name: frontend
+#    env_file:
+#      - ./frontend/.env
+#    build:
+#      context: ./frontend
+#    ports:
+#      - 8080:8080
+#    expose:
+#      - 8080
+#
+#  backend:
+#    restart: always
+#    container_name: backend
+#    env_file:
+#      - ./.env
+#    build:
+#      context: ./fastApi
+#    ports:
+#      - 8082:8082
+#    expose:
+#      - 8082
+#    depends_on:
+#      - db
+#    command: ['uvicorn', 'main:app', '--host=0.0.0.0', '--port=8082', '--reload']
 
-  backend:
-    restart: always
-    container_name: backend
-    env_file:
-      - ./DB.env
-    build: 
-      context: ./fastApi
-    ports:
-      - 8082:8082
-    expose:
-      - 8082
-    depends_on:
-      - db
-    command: ['uvicorn', 'main:app', '--host=0.0.0.0', '--port=8082', '--reload']
+
 
   db:
-    container_name: db
+    build:
+      context: ./database
+      dockerfile: Dockerfile
     env_file:
-      - ./DB.env
-    build: ./database
-    restart: always
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - ALLOW_IP_RANGE=0.0.0.0/0
     ports:
-      - 5432:5432
-    expose:
-      - 5432
-
-volumes:
-  pgdata:
+      - "5432:5432"
+    volumes:
+      - ./db_data:/var/lib/postgresql/data

@@ -1,7 +1,6 @@
 from datetime import date
 from pydantic import BaseModel
 
-
 class WorkInfoBase(BaseModel):
     date_of_hire: date
     date_of_dismissal: date | None
@@ -9,18 +8,15 @@ class WorkInfoBase(BaseModel):
     position_description: str
     order_number_date: str
 
-
 class WorkInfoCreate(WorkInfoBase):
     pass
-
 
 class WorkInfo(WorkInfoBase):
     id: int
     trudovaya_knizhka_id: int
 
     class Config:
-        orm_mode = True
-
+        from_attributes = True
 
 class AwardInfoBase(BaseModel):
     date: date
@@ -28,18 +24,15 @@ class AwardInfoBase(BaseModel):
     award_description: str
     order_number_date: str
 
-
 class AwardInfoCreate(AwardInfoBase):
     pass
-
 
 class AwardInfo(AwardInfoBase):
     id: int
     trudovaya_knizhka_id: int
 
     class Config:
-        orm_mode = True
-
+        from_attributes = True
 
 class TrudovayaKnizhkaBase(BaseModel):
     series: str
@@ -58,10 +51,8 @@ class TrudovayaKnizhkaBase(BaseModel):
     document_issue_date: date | None
     document_issued_by: str | None
 
-
 class TrudovayaKnizhkaCreate(TrudovayaKnizhkaBase):
     pass
-
 
 class TrudovayaKnizhka(TrudovayaKnizhkaBase):
     id: int
@@ -69,4 +60,4 @@ class TrudovayaKnizhka(TrudovayaKnizhkaBase):
     award_info: list[AwardInfo] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
