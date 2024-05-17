@@ -4,6 +4,7 @@ from typing import List
 from loguru import logger
 from fastapi import FastAPI, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
 from fastApi.database import crud, models, schema
 from fastApi.database.connect import engine, get_db
@@ -15,6 +16,15 @@ app = FastAPI()
 # Путь для сохранения загруженных файлов
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/uploadfiles/")
