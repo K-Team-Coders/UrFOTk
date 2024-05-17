@@ -529,7 +529,27 @@ export default {
     },
   },
   mounted() {
-    console.log("Received data:", this.userData);
+    // Проверка, если данные переданы через роут
+    if (this.$route.state && this.$route.state.userData) {
+      console.log("Received data:", this.$route.state.userData);
+      this.personData =
+        this.$route.state.userData.personData || this.personData;
+      this.workRecords =
+        this.$route.state.userData.workRecords || this.workRecords;
+      this.rewardRecords =
+        this.$route.state.userData.rewardRecords || this.rewardRecords;
+    }
+  },
+  watch: {
+    $route(to, from) {
+      if (to.state && to.state.userData) {
+        console.log("Route changed, received data:", to.state.userData);
+        this.personData = to.state.userData.personData || this.personData;
+        this.workRecords = to.state.userData.workRecords || this.workRecords;
+        this.rewardRecords =
+          to.state.userData.rewardRecords || this.rewardRecords;
+      }
+    },
   },
 };
 </script>
