@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-background w-full min-h-[98vh] duration-500">
+  <div class="bg-background w-full min-h-screen duration-500">
     <div class="flex justify-center">
       <DocumentsScanWindow />
     </div>

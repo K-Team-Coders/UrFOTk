@@ -4,7 +4,7 @@
       <SidebarMain />
     </div>
     <div
-      class="flex duration-500 flex-col min-h-[93vh] pt-14 ml-72 items-center w-full bg-frameBackground rounded-xl outline-dashed outline-[1px] outline-outlineColor"
+      class="flex duration-500 flex-col pt-14 ml-72 items-center w-full bg-frameBackground rounded-xl outline-dashed outline-[1px] outline-outlineColor"
     >
       <div class="flex mb-4">
         <p

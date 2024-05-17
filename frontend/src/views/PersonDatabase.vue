@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background w-full custom-scrollbar duration-500 min-h-screen">
     <div class="flex justify-center">
-      <SearchDocumentWindow />
+      <PersonDatabaseWindow />
     </div>
   </div>
 </template>
@@ -9,13 +9,13 @@
 <script>
 import Header2 from "@/components/Header2.vue";
 import Footer from "@/components/Footer.vue";
-import SearchDocumentWindow from "@/components/SearchDocumentWindow.vue";
+import PersonDatabaseWindow from "@/components/PersonDatabaseWindow.vue";
 
 export default {
   components: {
     Header2,
     Footer,
-    SearchDocumentWindow,
+    PersonDatabaseWindow,
   },
 };
 </script>
