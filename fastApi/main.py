@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastApi.database import crud, models, schema
 from fastApi.database.connect import engine, get_db
 
-# models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
