@@ -136,6 +136,9 @@ export default {
         this.alertTitle = "Ошибка";
         this.alertMessage = "Ошибка при отправке данных";
         this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 2000);
         console.error(error);
       }
     },
@@ -145,6 +148,9 @@ export default {
         this.alertTitle = "Ошибка";
         this.alertMessage = "Все поля должны быть заполнены!";
         this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 2000);
         return false;
       }
       return true;
