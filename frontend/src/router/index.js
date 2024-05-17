@@ -2,19 +2,29 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
   {
-    path: "/person_database",
+    path: "/",
     name: "PersonDataBase",
 
     component: () => import("../views/PersonDatabase.vue"),
   },
   {
-    path: "/",
+    path: "/document_scan",
     name: "DocumentsScan",
     props(route) {
-      return {  text: route.query.text }},
+      return { text: route.query.text };
+    },
 
     component: () => import("../views/DocumentsScan.vue"),
-  }, 
+  },
+  {
+    path: "/users",
+    name: "Users",
+    props(route) {
+      return { text: route.query.text };
+    },
+
+    component: () => import("../views/Users.vue"),
+  },
   {
     path: "/notfound",
     name: "NotFound",
