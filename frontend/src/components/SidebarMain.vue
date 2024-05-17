@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col gap-2 min-h-screen relative duration-500">
+    <Train class="absolute -top-8 -left-8" />
     <router-link to="/">
       <div class="">
         <p
@@ -42,12 +43,15 @@ import AssistantCategoryService from "./AssistantCategoryService.vue";
 import AssistantCategoryServiceSection from "./AssistantCategoryServiceSection.vue";
 import BaseIcon from "./BaseIcon.vue";
 import Switcher from "./Switcher.vue";
+import Train from "./Train.vue";
+
 export default {
   components: {
     AssistantCategoryService,
     AssistantCategoryServiceSection,
     BaseIcon,
     Switcher,
+    Train,
   },
 
   computed: {

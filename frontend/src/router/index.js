@@ -26,9 +26,9 @@ const routes = [
     component: () => import("../views/Users.vue"),
   },
   {
-    path: "/notfound",
+    path: "/error",
     name: "NotFound",
-    component: () => import("../components/PageNotFound.vue"),
+    component: () => import("../components/ErrorPage.vue"),
     props: true,
   },
 ];
