@@ -124,13 +124,12 @@ export default {
       this.isLoading = true;
       try {
         const response = await axios.post(
-          "http://26.48.35.87:8000/uploadfiles",
+          "http://26.48.35.87:8000/uploadfiles/",
           formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-            withCredentials: true,
           }
         );
 
@@ -174,8 +173,6 @@ export default {
       this.alertType = "error";
       this.alertTitle = "Ошибка";
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         console.error("Data:", error.response.data);
         console.error("Status:", error.response.status);
         console.error("Headers:", error.response.headers);
@@ -183,11 +180,9 @@ export default {
           error.response.data.message || error.response.status
         }`;
       } else if (error.request) {
-        // The request was made but no response was received
         console.error("Request:", error.request);
         this.alertMessage = "Сервер не отвечает. Попробуйте позже.";
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.error("Error message:", error.message);
         this.alertMessage = "Произошла ошибка при настройке запроса.";
       }
