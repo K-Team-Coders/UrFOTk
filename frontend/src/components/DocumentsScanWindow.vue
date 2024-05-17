@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full justify-center p-6 gap-4 duration-500 ">
+  <div class="flex w-full justify-center p-6 gap-4 duration-500">
     <div class="fixed w-64 left-6">
       <SidebarMain />
     </div>
@@ -38,6 +38,7 @@
               </svg>
             </button>
             <input
+              multiple
               class="w-full text-sm text-inputText shadow-md border-[0.5px] py-1 px-2 border-inputBorder rounded-lg cursor-pointer bg-inputBackground focus:outline-none"
               aria-describedby="file_input_help"
               id="files"

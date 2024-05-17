@@ -93,7 +93,7 @@ export default {
     services() {
       return [
         {
-          category: "Поиск документов",
+          category: "Сканировать документ",
           name: "search",
           classed: "w-8 h-8 text-green-400",
           route: "/",
