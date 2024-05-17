@@ -6,7 +6,7 @@
     @keydown.esc="close"
   >
     <div
-      class="bg-neutral-200 z-50 rounded-lg w-[50vw] h-[60vh] mx-auto xl:my-2 flex flex-col shadow-4xl relative"
+      class="bg-neutral-200 z-50 rounded-lg w-[50vw] h-auto mx-auto xl:my-2 flex flex-col shadow-4xl relative"
     >
       <div class="z-50">
         <ModalWindowButtonClose @click="close" class="absolute right-0" />
@@ -20,62 +20,12 @@
           @submit.prevent="submitPersonData"
         >
           <div class="flex items-center justify-between w-full gap-2">
-            <p class="text-neutral-700 w-3/12 font-semibold">Фамилия:</p>
-            <input
-              v-model="this.surname"
-              class="rounded-md w-9/12 h-8 pl-2.5 placeholder:text-sm border-[1px] border-neutral-300 shadow-sm"
-              placeholder="Например: Иванов"
-              required
-            />
-          </div>
-          <div class="flex items-center justify-between w-full gap-2">
-            <p class="text-neutral-700 w-3/12 font-semibold">Имя:</p>
-            <input
-              v-model="this.name"
-              class="rounded-md w-9/12 h-8 pl-2.5 placeholder:text-sm border-[1px] border-neutral-300 shadow-sm"
-              placeholder="Например: Дмитрий"
-              required
-            />
-          </div>
-          <div class="flex items-center justify-between w-full gap-2">
-            <p class="text-neutral-700 w-3/12 font-semibold">Отчество:</p>
-            <input
-              v-model="this.patronymic"
-              class="rounded-md w-9/12 h-8 pl-2.5 placeholder:text-sm border-[1px] border-neutral-300 shadow-sm"
-              placeholder="Например: Артемьевич"
-              required
-            />
-          </div>
-          <div class="flex items-center justify-between w-full gap-2">
-            <p class="text-neutral-700 w-3/12 font-semibold">Отдел:</p>
-            <select
-              v-model="this.otdel"
-              class="rounded-md w-9/12 h-8 pl-2.5 placeholder:text-sm border-[1px] border-neutral-300 shadow-sm"
-              required
-            >
-              <option>1 отдел</option>
-              <option>2 отдел</option>
-              <option>3 отдел</option>
-            </select>
-          </div>
-          <div class="flex items-center justify-between w-full gap-2">
-            <p class="text-neutral-700 w-3/12 font-semibold">
-              Уровень допуска:
+            <p class="text-neutral-700 w-4/12 mb-1.5 font-semibold">
+              Скан или фото документа:
             </p>
-            <select
-              v-model="this.secret"
-              required
-              class="rounded-md w-9/12 h-8 pl-2.5 placeholder:text-sm border-[1px] border-neutral-300 shadow-sm"
-            >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-            </select>
-          </div>
-          <div class="flex items-center justify-between w-full gap-2">
-            <p class="text-neutral-700 w-3/12 font-semibold">Фото:</p>
             <input
-              class="rounded-md w-9/12 h-8 pl-2.5 placeholder:text-sm file:rounded-xl file:w-[10vw] file:border-2 file:border-neutral-500 file:shadow-md file:mr-4"
+              multiple
+              class="rounded-md w-8/12 h-8 pl-2.5 placeholder:text-sm file:rounded-xl file:w-[12vw] file:border-2 file:border-neutral-500 file:shadow-md file:mr-4"
               type="file"
               accept="image/png, image/jpeg"
               ref="fileInput"
@@ -83,84 +33,118 @@
               required
             />
           </div>
-          <div class="flex items-center justify-end w-full gap-2">
+          <div
+            v-if="filePreviews.length"
+            class="flex flex-wrap mt-4 gap-2 justify-start"
+          >
+            <div
+              v-for="(file, index) in filePreviews"
+              :key="index"
+              class="w-1/5"
+            >
+              <img
+                :src="file"
+                alt="preview"
+                class="rounded-md shadow-md w-full cursor-pointer"
+                @click="openImageInNewWindow(file)"
+              />
+            </div>
+          </div>
+          <div class="flex items-center justify-end w-full gap-2 mt-4">
             <button
               @click.prevent="submitPersonData"
               type="submit"
-              class="bg-green-600 shadow-md hover:bg-green-700 duration-300 hover:shadow-xl rounded-md px-4 py-2 text-neutral-200"
+              class="bg-green-700 shadow-md mb-4 hover:bg-green-800 duration-300 hover:shadow-xl rounded-md px-4 py-2 text-neutral-200"
             >
-              Сохранить
+              Отправить
             </button>
           </div>
-          <div v-if="successMessage" class="text-green-600">
-            {{ successMessage }}
-          </div>
-          <div v-else-if="errorMessage" class="text-red-600">
-            {{ errorMessage }}
-          </div>
+          <transition
+            enter-active-class="transition ease-in-out duration-500 transform"
+            enter-from-class="translate-x-full"
+            enter-to-class="translate-x-0"
+            leave-active-class="transition ease-in-out duration-500 transform"
+            leave-from-class="translate-x-0"
+            leave-to-class="translate-x-full"
+          >
+            <Alert
+              v-if="showAlert"
+              :type="alertType"
+              :title="alertTitle"
+              :message="alertMessage"
+              :visible="showAlert"
+              @close="showAlert = false"
+            />
+          </transition>
         </form>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import ModalWindowButtonClose from "./ModalWindowButtonClose.vue";
+import Alert from "./Alert.vue";
 import axios from "axios";
+
 export default {
   components: {
     ModalWindowButtonClose,
+    Alert,
   },
   methods: {
     close() {
       this.$emit("close");
     },
-    updateFileInput() {
-      this.file = this.$refs.fileInput.files[0];
+    updateFileInput(event) {
+      this.files = Array.from(event.target.files);
+      this.generateFilePreviews();
+    },
+    generateFilePreviews() {
+      this.filePreviews = this.files.map((file) => URL.createObjectURL(file));
+    },
+    openImageInNewWindow(src) {
+      window.open(src, "_blank");
     },
     async submitPersonData() {
       if (!this.validateForm()) {
         return;
       }
       const formData = new FormData();
-      formData.append("surname", this.surname);
-      formData.append("name", this.name);
-      formData.append("patronymic", this.patronymic);
-      formData.append("otdel", this.otdel);
-      formData.append("secret", this.secret);
-      formData.append("file", this.file);
+      this.files.forEach((file) => {
+        formData.append("files", file);
+      });
 
       try {
         const response = await axios.post(
           "http://localhost:8000/uploadPeople",
           formData
         );
-        this.successMessage = "Данные успешно отправлены!";
-        this.surname = "";
-        this.name = "";
-        this.patronymic = "";
-        this.secret = "";
-        this.otdel = "";
-        this.file = "";
+        this.alertType = "success";
+        this.alertTitle = "Успешно";
+        this.alertMessage = "Данные успешно отправлены!";
+        this.showAlert = true;
+        this.files = [];
+        this.filePreviews = [];
         setTimeout(() => {
+          this.showAlert = false;
           this.$emit("close");
-          this.$emit("update-people-list");
-        }, 2000);
+        }, 4000);
         console.log(response.data);
       } catch (error) {
-        this.errorMessage = "Ошибка при отправке данных";
+        this.alertType = "error";
+        this.alertTitle = "Ошибка";
+        this.alertMessage = "Ошибка при отправке данных";
+        this.showAlert = true;
         console.error(error);
       }
     },
     validateForm() {
-      if (
-        !this.surname ||
-        !this.name ||
-        !this.patronymic ||
-        !this.otdel ||
-        !this.secret ||
-        !this.file
-      ) {
-        this.errorMessage = "Все поля должны быть заполнены!";
+      if (!this.files.length) {
+        this.alertType = "error";
+        this.alertTitle = "Ошибка";
+        this.alertMessage = "Все поля должны быть заполнены!";
+        this.showAlert = true;
         return false;
       }
       return true;
@@ -169,19 +153,35 @@ export default {
   mounted() {
     this.$el.focus();
   },
-
   emits: ["close"],
   data() {
     return {
-      surname: "",
-      name: "",
-      patronymic: "",
-      otdel: "",
-      secret: "",
-      file: "",
+      files: [],
+      filePreviews: [],
       successMessage: "",
       errorMessage: "",
+      showAlert: false,
+      alertType: "",
+      alertTitle: "",
+      alertMessage: "",
     };
   },
 };
 </script>
+
+<style scoped>
+.file-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.file-preview img {
+  width: 100%;
+  height: auto;
+  max-width: 100px;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+</style>

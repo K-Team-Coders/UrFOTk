@@ -60,13 +60,6 @@ export default {
           route: "/",
           isActive: this.$route.path === "/",
         },
-        {
-          category: "Сканировать документ",
-          name: "search",
-          classed: "w-8 h-8 text-green-400",
-          route: "/document_scan",
-          isActive: this.$route.path === "/document_scan",
-        },
       ];
     },
     isDarkMode() {
