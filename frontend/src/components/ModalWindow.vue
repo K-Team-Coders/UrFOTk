@@ -125,7 +125,13 @@ export default {
       try {
         const response = await axios.post(
           "http://26.48.35.87:8000/uploadfiles",
-          formData
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+          }
         );
 
         this.alertType = "success";
@@ -144,15 +150,9 @@ export default {
         }, 4000);
         console.log(response.data);
       } catch (error) {
-        this.alertType = "error";
-        this.alertTitle = "Ошибка";
-        this.alertMessage = "Ошибка при отправке данных";
-        this.showAlert = true;
+        this.handleError(error);
+      } finally {
         this.isLoading = false;
-        setTimeout(() => {
-          this.showAlert = false;
-        }, 2000);
-        console.error(error);
       }
     },
     validateForm() {
@@ -167,6 +167,34 @@ export default {
         return false;
       }
       return true;
+    },
+    handleError(error) {
+      console.error("Ошибка при отправке данных:", error);
+
+      this.alertType = "error";
+      this.alertTitle = "Ошибка";
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Data:", error.response.data);
+        console.error("Status:", error.response.status);
+        console.error("Headers:", error.response.headers);
+        this.alertMessage = `Ошибка при отправке данных: ${
+          error.response.data.message || error.response.status
+        }`;
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Request:", error.request);
+        this.alertMessage = "Сервер не отвечает. Попробуйте позже.";
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error message:", error.message);
+        this.alertMessage = "Произошла ошибка при настройке запроса.";
+      }
+      this.showAlert = true;
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 4000);
     },
   },
   mounted() {
