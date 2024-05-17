@@ -14,7 +14,10 @@
       <div class="flex justify-center pt-8">
         <p class="text-3xl font-bold">Добавить персонал</p>
       </div>
-      <div class="w-full pt-12">
+      <div v-if="isLoading" class="flex justify-center w-full py-4">
+        <LoaderTrain />
+      </div>
+      <div v-else class="w-full pt-12">
         <form
           class="flex flex-col gap-2 px-16 justify-center"
           @submit.prevent="submitPersonData"
@@ -59,6 +62,7 @@
               Отправить
             </button>
           </div>
+
           <transition
             enter-active-class="transition ease-in-out duration-500 transform"
             enter-from-class="translate-x-full"
@@ -85,12 +89,14 @@
 <script>
 import ModalWindowButtonClose from "./ModalWindowButtonClose.vue";
 import Alert from "./Alert.vue";
+import LoaderTrain from "./LoaderTrain.vue";
 import axios from "axios";
 
 export default {
   components: {
     ModalWindowButtonClose,
     Alert,
+    LoaderTrain,
   },
   methods: {
     close() {
@@ -114,12 +120,14 @@ export default {
       this.files.forEach((file) => {
         formData.append("files", file);
       });
-
+      console.log(formData);
+      this.isLoading = true;
       try {
         const response = await axios.post(
-          "http://localhost:8000/uploadPeople",
+          "http://26.48.35.87:8000/uploadfiles",
           formData
         );
+
         this.alertType = "success";
         this.alertTitle = "Успешно";
         this.alertMessage = "Данные успешно отправлены!";
@@ -129,6 +137,10 @@ export default {
         setTimeout(() => {
           this.showAlert = false;
           this.$emit("close");
+          this.$router.push({
+            path: "/users",
+            state: { userData: response.data },
+          });
         }, 4000);
         console.log(response.data);
       } catch (error) {
@@ -136,6 +148,7 @@ export default {
         this.alertTitle = "Ошибка";
         this.alertMessage = "Ошибка при отправке данных";
         this.showAlert = true;
+        this.isLoading = false;
         setTimeout(() => {
           this.showAlert = false;
         }, 2000);
@@ -170,6 +183,7 @@ export default {
       alertType: "",
       alertTitle: "",
       alertMessage: "",
+      isLoading: false,
     };
   },
 };

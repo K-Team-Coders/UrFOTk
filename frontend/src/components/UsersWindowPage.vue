@@ -346,28 +346,14 @@ export default {
     ModalWindow,
     SidebarMain,
   },
-  emits: ["close"],
-  methods: {
-    async fetchPeople() {
-      try {
-        const response = await fetch("http://localhost:8000/getperson");
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        this.people = data.people;
-        this.totalCount = data.total_count;
-        console.log(this.people);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    },
-    getImage(image_path) {
-      return `http://localhost:8000/inputs/people/${image_path}`;
+  props: {
+    userData: {
+      type: Object,
+      default: () => ({}),
     },
   },
   mounted() {
-    this.fetchPeople();
+    console.log("Received data:", this.userData);
   },
 };
 </script>
