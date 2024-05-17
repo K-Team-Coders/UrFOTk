@@ -30,6 +30,7 @@
             <!-- Фамилия -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.lastName"
                 placeholder="Фамилия"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -42,6 +43,7 @@
             <!-- Имя -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.name"
                 placeholder="Имя"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -54,6 +56,7 @@
             <!-- Отчество -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.patronymic"
                 placeholder="Отчество"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -66,6 +69,7 @@
             <!-- Дата рождения -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.birthday"
                 placeholder="Дата рождения"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -78,6 +82,7 @@
             <!-- Образование -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.education"
                 placeholder="Образование"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -90,6 +95,7 @@
             <!-- Профессия, специальность -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.profession"
                 placeholder="Профессия, специальность"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -102,6 +108,7 @@
             <!-- Дата заполнения -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.fillDate"
                 placeholder="Дата заполнения"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -119,6 +126,7 @@
             </p>
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.changeSurname"
                 placeholder="Фамилия"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -131,6 +139,7 @@
             <!-- Имя -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.changeName"
                 placeholder="Имя"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -143,6 +152,7 @@
             <!-- Отчество -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.changePatronymic"
                 placeholder="Отчество"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -155,6 +165,7 @@
             <!-- Документ -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.changeDoc"
                 placeholder="Документ"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -167,6 +178,7 @@
             <!-- Серия -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.docSerial"
                 placeholder="Серия"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -179,6 +191,7 @@
             <!-- Номер -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.docNumber"
                 placeholder="Номер"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -191,6 +204,7 @@
             <!-- Дата выдачи -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.deliveryDate"
                 placeholder="Дата выдачи"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -203,6 +217,7 @@
             <!-- Кем выдано -->
             <div class="relative h-11 w-full">
               <input
+                v-model="personData.whoDelivery"
                 placeholder="Кем выдано"
                 class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
               />
@@ -240,21 +255,71 @@
             </thead>
             <tbody class="text-center">
               <tr
-                v-for="i in 7"
+                v-for="(record, index) in workRecords"
+                :key="index"
                 class="bg-transparent text-neutral-800 dark:text-neutral-300 border-t dark:border-t-neutral-200 border-t-neutral-700 dark:border-neutral-700 dark:hover:bg-neutral-600"
               >
-                <td class="px-6 py-4">03.12.2024</td>
-                <td class="px-6 py-4">04.12.2024</td>
-                <td class="px-6 py-4 text-justify">
-                  fugiat sed veniam dolorum dicta soluta. Perferendis distinctio
-                  amet temporibus vero.
+                <td
+                  class="px-6 py-4"
+                  contenteditable
+                  @input="
+                    updateWorkRecord(
+                      index,
+                      'startDate',
+                      $event.target.innerText
+                    )
+                  "
+                >
+                  {{ record.startDate }}
                 </td>
-                <td class="px-6 py-4 text-justify">
-                  ratione odio provident earum quibusdam vero, perferendis
-                  commodi vel libero a, quas placeat maiores optio inventore
-                  possimus!
+                <td
+                  class="px-6 py-4"
+                  contenteditable
+                  @input="
+                    updateWorkRecord(index, 'endDate', $event.target.innerText)
+                  "
+                >
+                  {{ record.endDate }}
                 </td>
-                <td class="px-6 py-4 text-center">Приказ</td>
+                <td
+                  class="px-6 py-4 text-justify"
+                  contenteditable
+                  @input="
+                    updateWorkRecord(
+                      index,
+                      'sealExplanation',
+                      $event.target.innerText
+                    )
+                  "
+                >
+                  {{ record.sealExplanation }}
+                </td>
+                <td
+                  class="px-6 py-4 text-justify"
+                  contenteditable
+                  @input="
+                    updateWorkRecord(
+                      index,
+                      'positionExplanation',
+                      $event.target.innerText
+                    )
+                  "
+                >
+                  {{ record.positionExplanation }}
+                </td>
+                <td
+                  class="px-6 py-4 text-center"
+                  contenteditable
+                  @input="
+                    updateWorkRecord(
+                      index,
+                      'orderInfo',
+                      $event.target.innerText
+                    )
+                  "
+                >
+                  {{ record.orderInfo }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -286,20 +351,62 @@
             </thead>
             <tbody class="text-center">
               <tr
-                v-for="i in 7"
+                v-for="(reward, index) in rewardRecords"
+                :key="index"
                 class="bg-transparent text-neutral-800 dark:text-neutral-300 border-t dark:border-t-neutral-200 border-t-neutral-700 dark:border-neutral-700 dark:hover:bg-neutral-600"
               >
-                <td class="px-6 py-4">03.12.2024</td>
-                <td class="px-6 py-4 text-justify">
-                  fugiat sed veniam dolorum dicta soluta. Perferendis distinctio
-                  amet temporibus vero.
+                <td
+                  class="px-6 py-4"
+                  contenteditable
+                  @input="
+                    updateRewardRecord(
+                      index,
+                      'rewardDate',
+                      $event.target.innerText
+                    )
+                  "
+                >
+                  {{ reward.rewardDate }}
                 </td>
-                <td class="px-6 py-4 text-justify">
-                  ratione odio provident earum quibusdam vero, perferendis
-                  commodi vel libero a, quas placeat maiores optio inventore
-                  possimus!
+                <td
+                  class="px-6 py-4 text-justify"
+                  contenteditable
+                  @input="
+                    updateRewardRecord(
+                      index,
+                      'sealExplanation',
+                      $event.target.innerText
+                    )
+                  "
+                >
+                  {{ reward.sealExplanation }}
                 </td>
-                <td class="px-6 py-4 text-center">Приказ</td>
+                <td
+                  class="px-6 py-4 text-justify"
+                  contenteditable
+                  @input="
+                    updateRewardRecord(
+                      index,
+                      'rewardExplanation',
+                      $event.target.innerText
+                    )
+                  "
+                >
+                  {{ reward.rewardExplanation }}
+                </td>
+                <td
+                  class="px-6 py-4 text-center"
+                  contenteditable
+                  @input="
+                    updateRewardRecord(
+                      index,
+                      'orderInfo',
+                      $event.target.innerText
+                    )
+                  "
+                >
+                  {{ reward.orderInfo }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -352,8 +459,97 @@ export default {
       default: () => ({}),
     },
   },
+  data() {
+    return {
+      personData: {
+        lastName: "",
+        name: "",
+        patronymic: "",
+        birthday: "",
+        education: "",
+        profession: "",
+        fillDate: "",
+        changeSurname: "",
+        changeName: "",
+        changePatronymic: "",
+        changeDoc: "",
+        docSerial: "",
+        docNumber: "",
+        deliveryDate: "",
+        whoDelivery: "",
+      },
+      workRecords: [
+        {
+          startDate: "03.12.2024",
+          endDate: "04.12.2024",
+          sealExplanation:
+            "fugiat sed veniam dolorum dicta soluta. Perferendis distinctio amet temporibus vero.",
+          positionExplanation:
+            "ratione odio provident earum quibusdam vero, perferendis commodi vel libero a, quas placeat maiores optio inventore possimus!",
+          orderInfo: "Приказ",
+        },
+      ],
+      rewardRecords: [
+        {
+          rewardDate: "03.12.2024",
+          sealExplanation:
+            "fugiat sed veniam dolorum dicta soluta. Perferendis distinctio amet temporibus vero.",
+          rewardExplanation:
+            "ratione odio provident earum quibusdam vero, perferendis commodi vel libero a, quas placeat maiores optio inventore possimus!",
+          orderInfo: "Приказ",
+        },
+      ],
+    };
+  },
+  methods: {
+    updateWorkRecord(index, field, value) {
+      this.workRecords[index][field] = value;
+    },
+    updateRewardRecord(index, field, value) {
+      this.rewardRecords[index][field] = value;
+    },
+    saveData() {
+      // Здесь вы можете сохранить измененные данные
+      console.log(this.workRecords);
+      console.log(this.rewardRecords);
+
+      // Пример отправки данных на сервер
+      axios
+        .post("http://your-server-url/api/save", {
+          personData: this.personData,
+          workRecords: this.workRecords,
+          rewardRecords: this.rewardRecords,
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
   mounted() {
-    console.log("Received data:", this.userData);
+    // Проверка, если данные переданы через роут
+    if (this.$route.state && this.$route.state.userData) {
+      console.log("Received data:", this.$route.state.userData);
+      this.personData =
+        this.$route.state.userData.personData || this.personData;
+      this.workRecords =
+        this.$route.state.userData.workRecords || this.workRecords;
+      this.rewardRecords =
+        this.$route.state.userData.rewardRecords || this.rewardRecords;
+    }
+  },
+  watch: {
+    $route(to, from) {
+      if (to.state && to.state.userData) {
+        console.log("Route changed, received data:", to.state.userData);
+        this.personData = to.state.userData.personData || this.personData;
+        this.workRecords = to.state.userData.workRecords || this.workRecords;
+        this.rewardRecords =
+          to.state.userData.rewardRecords || this.rewardRecords;
+      }
+    },
   },
 };
 </script>
