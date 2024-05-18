@@ -69,7 +69,7 @@ def create_trudovaya_knizhka(trudovaya_knizhka: TrudovayaKnizhkaCreate, db: Sess
 
 @app.get("/trudovaya_knizhka/latest", response_model=List[TrudovayaKnizhkaOut])
 def get_latest_trudovaya_knizhka(db: Session = Depends(get_db)):
-    return db.query(TrudovayaKnizhka).order_by(TrudovayaKnizhka.id.desc()).limit(5).all()
+    return db.query(TrudovayaKnizhka).order_by(TrudovayaKnizhka.id.desc()).all()
 
 
 @app.get("/trudovaya_knizhka/{id}", response_model=TrudovayaKnizhkaOut)
@@ -96,15 +96,18 @@ def update_trudovaya_knizhka(id: int, trudovaya_knizhka: TrudovayaKnizhkaOut, db
     if trudovaya_knizhka.work_info is not None:
         db.query(WorkInfo).filter(WorkInfo.trudovaya_knizhka_id == id).delete()
         for work in trudovaya_knizhka.work_info:
-            db_work = WorkInfo(**work.dict(), trudovaya_knizhka_id=id)
+            db_work = WorkInfo(**work.dict(exclude={"trudovaya_knizhka_id"}), trudovaya_knizhka_id=id)
             db.add(db_work)
 
     if trudovaya_knizhka.award_info is not None:
         db.query(AwardInfo).filter(AwardInfo.trudovaya_knizhka_id == id).delete()
         for award in trudovaya_knizhka.award_info:
-            db_award = AwardInfo(**award.dict(), trudovaya_knizhka_id=id)
+            db_award = AwardInfo(**award.dict(exclude={"trudovaya_knizhka_id"}), trudovaya_knizhka_id=id)
             db.add(db_award)
 
+    db.commit()
+    db.refresh(db_trudovaya_knizhka)
+    return db_trudovaya_knizhka
     db.commit()
     db.refresh(db_trudovaya_knizhka)
     return db_trudovaya_knizhka

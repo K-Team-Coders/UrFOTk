@@ -35,11 +35,11 @@ class WorkInfo(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     trudovaya_knizhka_id = Column(Integer, ForeignKey('trudovaya_knizhka.id'), nullable=False)
-    date_of_hire = Column(String(20), nullable=False)
+    date_of_hire = Column(String(20), nullable=True)
     date_of_dismissal = Column(String(20), nullable=True)
-    stamp_description = Column(String(200), nullable=False)
-    position_description = Column(String(200), nullable=False)
-    order_number_date = Column(String(100), nullable=False)
+    stamp_description = Column(String(200), nullable=True)
+    position_description = Column(String(200), nullable=True)
+    order_number_date = Column(String(100), nullable=True)
 
     trudovaya_knizhka = relationship("TrudovayaKnizhka", back_populates="work_info")
 
@@ -49,10 +49,10 @@ class AwardInfo(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     trudovaya_knizhka_id = Column(Integer, ForeignKey('trudovaya_knizhka.id'), nullable=False)
-    date = Column(String(20), nullable=False)
-    stamp_description = Column(String(200), nullable=False)
-    award_description = Column(String(500), nullable=False)
-    order_number_date = Column(String(100), nullable=False)
+    date = Column(String(20), nullable=True)
+    stamp_description = Column(String(200), nullable=True)
+    award_description = Column(String(500), nullable=True)
+    order_number_date = Column(String(100), nullable=True)
 
     trudovaya_knizhka = relationship("TrudovayaKnizhka", back_populates="award_info")
 

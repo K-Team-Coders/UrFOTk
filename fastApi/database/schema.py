@@ -61,14 +61,14 @@ class TrudovayaKnizhkaBase(BaseModel):
 
 
 class TrudovayaKnizhkaCreate(TrudovayaKnizhkaBase):
-    work_info: List[WorkInfoCreate] = []
-    award_info: List[AwardInfoCreate] = []
+    work_info: Optional[List[WorkInfoCreate]] = []
+    award_info: Optional[List[AwardInfoCreate]] = []
 
 
 class TrudovayaKnizhkaOut(TrudovayaKnizhkaBase):
     id: int
-    work_info: List[WorkInfoOut] = []
-    award_info: List[AwardInfoOut] = []
+    work_info: Optional[List[WorkInfoOut]] = []
+    award_info: Optional[List[AwardInfoOut]] = []
 
     class Config:
         from_attributes = True

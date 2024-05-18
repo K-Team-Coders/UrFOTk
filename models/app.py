@@ -1,5 +1,11 @@
+import os
 import cv2
 import json
+import sys
+
+sys.path.append('SEGM-model/')
+sys.path.append('OCR-model/')
+sys.path.append('ReadingPipeline/')
 
 import gradio as gr
 from huggingface_hub import hf_hub_download
@@ -51,7 +57,7 @@ def predict(image_path):
 
 PIPELINE_CONFIG_PATH = get_config_and_download_weights("sberbank-ai/ReadingPipeline-notebooks")
 
-PREDICTOR = PipelinePredictor(pipeline_config_path=PIPELINE_CONFIG_PATH)
+predictor = PipelinePredictor(pipeline_config_path=PIPELINE_CONFIG_PATH)
 
 gr.Interface(
     predict,
@@ -60,5 +66,12 @@ gr.Interface(
     title="School notebook recognition",
 ).launch()
 
-if __name__ == "__main__":
-    predict("./uploads/birth_2.jpg")
+image = cv2.imread(r"C:\Users\Boba\Desktop\birth_2.jpg")
+rotated_image, pred_data = predictor(image)
+structured_text = get_structured_text(pred_data, ['shrinked_text'])
+
+result_text = [' '.join(line_text) for page_text in structured_text
+               for line_text in page_text]
+
+for line in result_text:
+    print(line)
