@@ -8,7 +8,7 @@
     >
       <!-- Форма для сохранения данных -->
       <form @submit.prevent="submitData" class="w-10/12">
-        <div class="flex pt-10">
+        <div class="flex justify-center pt-10">
           <p
             class="text-center text-4xl font-black text-activeText duration-500"
           >
@@ -390,19 +390,13 @@
 </template>
 
 <script>
-import TextOutput from "./TextOutput.vue";
-import SmallLoader from "./SmallLoader.vue";
 import BaseIcon from "./BaseIcon.vue";
 import SidebarMain from "./SidebarMain.vue";
-import ModalWindow from "./ModalWindow.vue";
 import axios from "axios";
 
 export default {
   components: {
-    TextOutput,
-    SmallLoader,
     BaseIcon,
-    ModalWindow,
     SidebarMain,
   },
   props: {
@@ -452,17 +446,19 @@ export default {
   methods: {
     async submitData() {
       console.log(this.trudovaya_knizhka);
-      try {
-        const response = await axios.post(
+      axios
+        .post(
           "http://26.48.35.87:8000/trudovaya_knizhka/",
           this.trudovaya_knizhka
-        );
-        console.log(response.data);
-        // Handle successful response
-      } catch (error) {
-        console.error(error);
-        // Handle error
-      }
+        )
+        .then((response) => {
+          console.log(response.data);
+          // Обработка успешного ответа
+        })
+        .catch((error) => {
+          console.error("Error sending data:", error);
+          // Обработка ошибки
+        });
     },
     updateWorkRecord(index, field, value) {
       this.trudovaya_knizhka.work_info[index][field] = value;
