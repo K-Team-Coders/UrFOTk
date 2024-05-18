@@ -132,7 +132,6 @@ export default {
             },
           }
         );
-        console.log(response.data)
         const userId = response.data.last_trudovaya_knizhka_id
 ;
         this.$router.push({
@@ -149,7 +148,6 @@ export default {
           this.showAlert = false;
           this.$emit("close");
         }, 3000);
-        console.log(response.data);
       } catch (error) {
         this.handleError(error);
       } finally {

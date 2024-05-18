@@ -49,30 +49,7 @@
               {{ item.name }}
             </button>
           </div>
-
-          <div id="dropdown-birthday" class="">
-            <label for="birthday" class="sr-only">Выберите год рождения</label>
-            <select
-              v-model="selectedBirthday"
-              @change="isFiltering = true"
-              id="birthday"
-              class="border-2 bg-frameBackground hover:bg-buttonHover shadow-md duration-500 text-neutral-600 font-roboto font-medium rounded-xl block px-4 py-2 dark:text-neutral-100"
-            >
-              <option selected>Выберите отдел</option>
-              <option v-for="year in uniqueBirthday" :key="year">
-                {{ year }}
-              </option>
-            </select>
-          </div>
         </div>
-      </div>
-      <div class="flex justify-end w-11/12 pt-2">
-        <button
-          @click="resetFilters"
-          class="text-sm ml-2 text-neutral-500 hover:text-red-600 focus:outline-none"
-        >
-          Сбросить все фильтры
-        </button>
       </div>
       <div
         class="flex justify-between items-center text-neutral-400 pt-12 w-11/12"
@@ -107,31 +84,28 @@
               @click="goToUserDetails(person.id)"
             >
               <div
-                class="border-2 shadow-md border-neutral-200 w-full rounded-xl p-2.5"
+                class="border-2 shadow-md border-neutral-200 w-full rounded-xl p-2.5 cursor-pointer"
               >
                 <div class="flex justify-between">
-                  <div class="flex">
-                    <div class="flex flex-col justify-between px-4">
-                      <div>
-                        <p
-                          class="text-activeText text-lg duration-500 cursor-pointer flex"
-                        >
-                          ФИО: {{ person.last_name }} {{ person.first_name }}
-                          {{ person.middle_name }}
-                        </p>
-                        <p
-                          class="text-activeText text-lg hover:underline duration-500 cursor-pointer flex"
-                        >
-                          Серия: {{ person.series }}
-                        </p>
-                      </div>
+                  <div class="flex flex-col justify-between px-4">
+                    <div>
                       <p
-                        class="text-activeText text-lg hover:underline duration-500 cursor-pointer flex"
+                        class="text-activeText hover:underline text-base duration-500 flex"
                       >
+                        ФИО: {{ person.last_name }} {{ person.first_name }}
+                        {{ person.middle_name }}
+                      </p>
+                    </div>
+                    <div class="flex gap-2">
+                      <p class="text-activeText text-base duration-500 flex">
+                        Серия: {{ person.series }}
+                      </p>
+                      <p class="text-activeText text-base duration-500 flex">
                         Номер: {{ person.number }}
                       </p>
                     </div>
                   </div>
+
                   <BaseIcon
                     @click="deletePerson(person.id)"
                     name="x"
@@ -218,12 +192,12 @@ export default {
         {
           id: 1,
           name: "По фамилии А → Я",
-          sortingFunction: (a, b) => a.surname.localeCompare(b.surname),
+          sortingFunction: (a, b) => a.last_name.localeCompare(b.last_name),
         },
         {
           id: 2,
           name: "По фамилии Я → A",
-          sortingFunction: (a, b) => b.surname.localeCompare(a.surname),
+          sortingFunction: (a, b) => b.last_name.localeCompare(a.last_name),
         },
       ],
       filterIsOpen: false,
@@ -234,7 +208,7 @@ export default {
       isModalOpen: false,
       searchQuery: "",
       currentPage: 1,
-      pageSize: 6,
+      pageSize: 8,
       totalCount: 0,
       selectedBirthday: null,
       isFiltering: false,
@@ -297,13 +271,6 @@ export default {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
       }
-    },
-    resetFilters() {
-      this.selectedBirthday = null;
-      this.selectedFilter = null;
-      this.searchQuery = "";
-      this.currentPage = 1;
-      this.isFiltering = false;
     },
   },
   mounted() {
@@ -376,10 +343,6 @@ export default {
         pages.push(i);
       }
       return pages;
-    },
-    uniqueBirthday() {
-      const years = this.people.map((person) => person.birth_year);
-      return [...new Set(years)];
     },
   },
 };

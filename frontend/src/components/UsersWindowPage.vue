@@ -15,7 +15,7 @@
             Трудовая книжка
           </p>
         </div>
-        <div class="text-activeText flex gap-4 pb-8 pt-3">
+        <div class="text-activeText flex gap-4 pb-8 pt-8">
           <div class="relative h-11 w-full">
             <input
               v-model="trudovaya_knizhka.series"
@@ -34,9 +34,9 @@
           </div>
         </div>
         <!-- Данные о персоне -->
-        <div class="flex justify-between">
+        <div class="flex justify-between gap-24">
           <!-- Всегда -->
-          <div class="min-w-[430px] flex flex-col gap-3">
+          <div class="w-1/2 flex flex-col gap-3">
             <p class="text-activeText font-semibold text-center">
               <br />
             </p>
@@ -88,7 +88,7 @@
             </div>
           </div>
           <!-- Если происходила смена ФИО -->
-          <div class="min-w-[430px] flex flex-col gap-3">
+          <div class="w-1/2 flex flex-col gap-3">
             <p class="text-activeText font-semibold text-center">
               Происходила смена ФИО
             </p>
@@ -267,6 +267,7 @@
         <div class="flex justify-end">
           <button
             @click="addWorkRecord"
+            type="button"
             class="pr-1 text-sm text-activeText rounded"
           >
             Создать новую строку
@@ -357,6 +358,7 @@
         <div class="flex justify-end mb-4">
           <button
             @click="addRewardRecord"
+            type="button"
             class="pr-1 text-sm text-activeText rounded"
           >
             Создать новую строку
@@ -386,18 +388,37 @@
         </div>
       </form>
     </div>
+    <transition
+      enter-active-class="transition ease-in-out duration-500 transform"
+      enter-from-class="translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition ease-in-out duration-500 transform"
+      leave-from-class="translate-x-0"
+      leave-to-class="translate-x-full"
+    >
+      <Alert
+        v-if="showAlert"
+        :type="alertType"
+        :title="alertTitle"
+        :message="alertMessage"
+        :visible="showAlert"
+        @close="showAlert = false"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
 import BaseIcon from "./BaseIcon.vue";
 import SidebarMain from "./SidebarMain.vue";
+import Alert from "./Alert.vue";
 import axios from "axios";
 
 export default {
   components: {
     BaseIcon,
     SidebarMain,
+    Alert,
   },
   props: {
     userData: {
@@ -442,6 +463,10 @@ export default {
           },
         ],
       },
+      showAlert: false,
+      alertType: "",
+      alertTitle: "",
+      alertMessage: "",
     };
   },
   methods: {
@@ -455,18 +480,45 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-          // Обработка успешного ответа
+          this.showAlertMessage(
+            "success",
+            "Успех",
+            "Данные успешно сохранены."
+          );
         })
         .catch((error) => {
           console.error("Error sending data:", error);
-          // Обработка ошибки
+          this.showAlertMessage(
+            "error",
+            "Ошибка",
+            "Не удалось сохранить данные."
+          );
         });
+    },
+    showAlertMessage(type, title, message) {
+      this.alertType = type;
+      this.alertTitle = title;
+      this.alertMessage = message;
+      this.showAlert = true;
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 3000); // Hide alert after 3 seconds
     },
     updateWorkRecord(index, field, value) {
       this.trudovaya_knizhka.work_info[index][field] = value;
     },
     updateRewardRecord(index, field, value) {
       this.trudovaya_knizhka.award_info[index][field] = value;
+    },
+    async fetchTrudovayaKnizhka(id) {
+      try {
+        const response = await axios.get(
+          `http://26.48.35.87:8000/trudovaya_knizhka/${id}`
+        );
+        this.trudovaya_knizhka = response.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     },
     addWorkRecord() {
       this.trudovaya_knizhka.work_info.push({
@@ -484,16 +536,6 @@ export default {
         award_description: "",
         order_number_date: "",
       });
-    },
-    async fetchTrudovayaKnizhka(id) {
-      try {
-        const response = await axios.get(
-          `http://26.48.35.87:8000/trudovaya_knizhka/${id}`
-        );
-        this.trudovaya_knizhka = response.data;
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
     },
   },
   async mounted() {
