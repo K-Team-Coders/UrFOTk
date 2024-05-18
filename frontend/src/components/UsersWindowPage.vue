@@ -15,7 +15,7 @@
             Трудовая книжка
           </p>
         </div>
-        <div class="text-activeText flex gap-4 pb-8 pt-3">
+        <div class="text-activeText flex gap-4 pb-8 pt-8">
           <div class="relative h-11 w-full">
             <input
               v-model="trudovaya_knizhka.series"
@@ -34,9 +34,9 @@
           </div>
         </div>
         <!-- Данные о персоне -->
-        <div class="flex justify-between">
+        <div class="flex justify-between gap-24">
           <!-- Всегда -->
-          <div class="min-w-[430px] flex flex-col gap-3">
+          <div class="w-1/2 flex flex-col gap-3">
             <p class="text-activeText font-semibold text-center">
               <br />
             </p>
@@ -88,7 +88,7 @@
             </div>
           </div>
           <!-- Если происходила смена ФИО -->
-          <div class="min-w-[430px] flex flex-col gap-3">
+          <div class="w-1/2 flex flex-col gap-3">
             <p class="text-activeText font-semibold text-center">
               Происходила смена ФИО
             </p>
@@ -267,6 +267,7 @@
         <div class="flex justify-end">
           <button
             @click="addWorkRecord"
+            type="button"
             class="pr-1 text-sm text-activeText rounded"
           >
             Создать новую строку
@@ -357,6 +358,7 @@
         <div class="flex justify-end mb-4">
           <button
             @click="addRewardRecord"
+            type="button"
             class="pr-1 text-sm text-activeText rounded"
           >
             Создать новую строку
@@ -386,18 +388,37 @@
         </div>
       </form>
     </div>
+    <transition
+      enter-active-class="transition ease-in-out duration-500 transform"
+      enter-from-class="translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition ease-in-out duration-500 transform"
+      leave-from-class="translate-x-0"
+      leave-to-class="translate-x-full"
+    >
+      <Alert
+        v-if="showAlert"
+        :type="alertType"
+        :title="alertTitle"
+        :message="alertMessage"
+        :visible="showAlert"
+        @close="showAlert = false"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
 import BaseIcon from "./BaseIcon.vue";
 import SidebarMain from "./SidebarMain.vue";
+import Alert from "./Alert.vue";
 import axios from "axios";
 
 export default {
   components: {
     BaseIcon,
     SidebarMain,
+    Alert,
   },
   props: {
     userData: {
@@ -408,6 +429,7 @@ export default {
   data() {
     return {
       trudovaya_knizhka: {
+        id: "",
         series: "",
         number: "",
         last_name: "",
@@ -441,30 +463,62 @@ export default {
           },
         ],
       },
+      showAlert: false,
+      alertType: "",
+      alertTitle: "",
+      alertMessage: "",
     };
   },
   methods: {
     async submitData() {
       console.log(this.trudovaya_knizhka);
+      const id = this.$route.params.id;
       axios
-        .post(
-          "http://26.48.35.87:8000/trudovaya_knizhka/",
+        .put(
+          `http://26.48.35.87:8000/trudovaya_knizhka/${id}`,
           this.trudovaya_knizhka
         )
         .then((response) => {
           console.log(response.data);
-          // Обработка успешного ответа
+          this.showAlertMessage(
+            "success",
+            "Успех",
+            "Данные успешно сохранены."
+          );
         })
         .catch((error) => {
           console.error("Error sending data:", error);
-          // Обработка ошибки
+          this.showAlertMessage(
+            "error",
+            "Ошибка",
+            "Не удалось сохранить данные."
+          );
         });
+    },
+    showAlertMessage(type, title, message) {
+      this.alertType = type;
+      this.alertTitle = title;
+      this.alertMessage = message;
+      this.showAlert = true;
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 3000); // Hide alert after 3 seconds
     },
     updateWorkRecord(index, field, value) {
       this.trudovaya_knizhka.work_info[index][field] = value;
     },
     updateRewardRecord(index, field, value) {
       this.trudovaya_knizhka.award_info[index][field] = value;
+    },
+    async fetchTrudovayaKnizhka(id) {
+      try {
+        const response = await axios.get(
+          `http://26.48.35.87:8000/trudovaya_knizhka/${id}`
+        );
+        this.trudovaya_knizhka = response.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     },
     addWorkRecord() {
       this.trudovaya_knizhka.work_info.push({
@@ -483,83 +537,10 @@ export default {
         order_number_date: "",
       });
     },
-    //   saveData() {
-    //     // Prepare the data according to the expected model
-    //     const dataToSend = {
-    //       series: this.trudovaya_knizhka.series,
-    //       number: this.trudovaya_knizhka.number,
-    //       last_name: this.trudovaya_knizhka.last_name,
-    //       first_name: this.trudovaya_knizhka.first_name,
-    //       middle_name: this.trudovaya_knizhka.middle_name,
-    //       birth_year: this.trudovaya_knizhka.birth_year,
-    //       date_of_filling: this.trudovaya_knizhka.date_of_filling,
-    //       changed_last_name: this.trudovaya_knizhka.changed_last_name,
-    //       changed_first_name: this.trudovaya_knizhka.changed_first_name,
-    //       changed_middle_name: this.trudovaya_knizhka.changed_middle_name,
-    //       document_basis: this.trudovaya_knizhka.document_basis,
-    //       document_series: this.trudovaya_knizhka.document_series,
-    //       document_number: this.trudovaya_knizhka.document_number,
-    //       document_issue_date: this.trudovaya_knizhka.document_issue_date,
-    //       document_issued_by: this.trudovaya_knizhka.document_issued_by,
-    //       work_info: this.trudovaya_knizhka.work_info,
-    //       award_info: this.trudovaya_knizhka.award_info,
-    //     };
-    //   },
-    // },
-    // mounted() {
-    //   // Проверка, если данные переданы через роут
-    //   if (this.$route.state && this.$route.state.userData) {
-    //     console.log("Received data:", this.$route.state.userData);
-    //     const userData = this.$route.state.userData;
-    //     this.trudovaya_knizhka.series = userData.series || "";
-    //     this.trudovaya_knizhka.number = userData.number || "";
-    //     this.trudovaya_knizhka.last_name = userData.last_name || "";
-    //     this.trudovaya_knizhka.first_name = userData.first_name || "";
-    //     this.trudovaya_knizhka.middle_name = userData.middle_name || "";
-    //     this.trudovaya_knizhka.birth_year = userData.birth_year || "";
-    //     this.trudovaya_knizhka.date_of_filling = userData.date_of_filling || "";
-    //     this.trudovaya_knizhka.changed_last_name =
-    //       userData.changed_last_name || "";
-    //     this.trudovaya_knizhka.changed_first_name =
-    //       userData.changed_first_name || "";
-    //     this.trudovaya_knizhka.changed_middle_name =
-    //       userData.changed_middle_name || "";
-    //     this.trudovaya_knizhka.document_basis = userData.document_basis || "";
-    //     this.trudovaya_knizhka.document_series = userData.document_series || "";
-    //     this.trudovaya_knizhka.document_number = userData.document_number || "";
-    //     this.trudovaya_knizhka.document_issue_date =
-    //       userData.document_issue_date || "";
-    //     this.trudovaya_knizhka.document_issued_by =
-    //       userData.document_issued_by || "";
-    //     this.trudovaya_knizhka.work_info = userData.work_info || [
-    //       {
-    //         date_of_hire: "",
-    //         date_of_dismissal: "",
-    //         stamp_description: "",
-    //         position_description: "",
-    //         order_number_date: "",
-    //       },
-    //     ];
-    //     this.trudovaya_knizhka.award_info = userData.award_info || [
-    //       {
-    //         date: "",
-    //         stamp_description: "",
-    //         award_description: "",
-    //         order_number_date: "",
-    //       },
-    //     ];
-    //   }
-    // },
-    // watch: {
-    //   $route(to, from) {
-    //     if (to.state && to.state.userData) {
-    //       console.log("Route changed, received data:", to.state.userData);
-    //       this.trudovaya_knizhka =
-    //         to.state.userData.trudovaya_knizhka || this.trudovaya_knizhka;
-    //       this.work_info = to.state.userData.work_info || this.work_info;
-    //       this.award_info = to.state.userData.award_info || this.award_info;
-    //     }
-    //   },
+  },
+  async mounted() {
+    const id = this.$route.params.id;
+    await this.fetchTrudovayaKnizhka(id);
   },
   computed: {
     inputFieldClass() {
