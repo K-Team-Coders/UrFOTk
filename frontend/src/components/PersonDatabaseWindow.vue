@@ -101,7 +101,11 @@
           :key="filteredPeople"
         >
           <div class="w-full mb-10 grid grid-cols-2 gap-4">
-            <div v-for="person in filteredPeople" :key="person.id">
+            <div
+              v-for="person in filteredPeople"
+              :key="person.id"
+              @click="goToUserDetails(person.id)"
+            >
               <div
                 class="border-2 shadow-md border-neutral-200 w-full rounded-xl p-2.5"
               >
@@ -110,7 +114,7 @@
                     <div class="flex flex-col justify-between px-4">
                       <div>
                         <p
-                          class="text-activeText text-lg hover:underline duration-500 cursor-pointer flex"
+                          class="text-activeText text-lg duration-500 cursor-pointer flex"
                         >
                           ФИО: {{ person.last_name }} {{ person.first_name }}
                           {{ person.middle_name }}
@@ -252,6 +256,10 @@ export default {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+    },
+    goToUserDetails(userId) {
+      // Переход на страницу с данными о пользователе
+      this.$router.push({ name: "UserDetails", params: { id: userId } });
     },
     scrollToTop() {
       window.scrollTo({

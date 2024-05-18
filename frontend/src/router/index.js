@@ -17,11 +17,8 @@ const routes = [
     component: () => import("../views/DocumentsScan.vue"),
   },
   {
-    path: "/users",
-    name: "Users",
-    props(route) {
-      return { text: route.query.text };
-    },
+    path: "/users/:id",
+    name: "UserDetails",
 
     component: () => import("../views/Users.vue"),
   },

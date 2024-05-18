@@ -132,7 +132,12 @@ export default {
             },
           }
         );
-
+        const userId = response.data.id;
+        this.$router.push({
+          name: "UserDetails",
+          params: { id: userId },
+          state: { userData: response.data },
+        });
         this.alertType = "success";
         this.alertTitle = "Успешно";
         this.alertMessage = "Данные успешно отправлены!";
@@ -142,11 +147,7 @@ export default {
         setTimeout(() => {
           this.showAlert = false;
           this.$emit("close");
-          this.$router.push({
-            path: "/users",
-            state: { userData: response.data },
-          });
-        }, 4000);
+        }, 3000);
         console.log(response.data);
       } catch (error) {
         this.handleError(error);
