@@ -50,31 +50,17 @@
             </button>
           </div>
 
-          <div id="dropdown-otdel" class="">
-            <label for="otdel" class="sr-only">Выберите отдел</label>
+          <div id="dropdown-birthday" class="">
+            <label for="birthday" class="sr-only">Выберите год рождения</label>
             <select
-              v-model="selectedOtdel"
+              v-model="selectedBirthday"
               @change="isFiltering = true"
-              id="otdel"
+              id="birthday"
               class="border-2 bg-frameBackground hover:bg-buttonHover shadow-md duration-500 text-neutral-600 font-roboto font-medium rounded-xl block px-4 py-2 dark:text-neutral-100"
             >
               <option selected>Выберите отдел</option>
-              <option v-for="otd in uniqueOtdel" :key="otd">
-                {{ otd }}
-              </option>
-            </select>
-          </div>
-          <div id="dropdown-secret" class="">
-            <label for="secret" class="sr-only">Выберите форму</label>
-            <select
-              v-model="selectedSecret"
-              @change="isFiltering = true"
-              id="secret"
-              class="border-2 bg-frameBackground hover:bg-buttonHover shadow-md duration-500 text-neutral-600 font-roboto font-medium rounded-xl block px-4 py-2 dark:text-neutral-100"
-            >
-              <option selected>Выберите форму</option>
-              <option v-for="sec in uniqueSecret" :key="sec">
-                {{ sec }}
+              <option v-for="year in uniqueBirthday" :key="year">
+                {{ year }}
               </option>
             </select>
           </div>
@@ -121,28 +107,24 @@
               >
                 <div class="flex justify-between">
                   <div class="flex">
-                    <img
-                      :src="getImage(person.image_path)"
-                      class="h-40 w-32 rounded-xl"
-                    />
                     <div class="flex flex-col justify-between px-4">
                       <div>
                         <p
                           class="text-activeText text-lg hover:underline duration-500 cursor-pointer flex"
                         >
-                          ФИО: {{ person.surname }} {{ person.name }}
-                          {{ person.patronymic }}
+                          ФИО: {{ person.last_name }} {{ person.first_name }}
+                          {{ person.middle_name }}
                         </p>
                         <p
                           class="text-activeText text-lg hover:underline duration-500 cursor-pointer flex"
                         >
-                          Отдел: {{ person.otdel }}
+                          Серия: {{ person.series }}
                         </p>
                       </div>
                       <p
                         class="text-activeText text-lg hover:underline duration-500 cursor-pointer flex"
                       >
-                        Уровень допуска: {{ person.secret }}
+                        Номер: {{ person.number }}
                       </p>
                     </div>
                   </div>
@@ -250,21 +232,22 @@ export default {
       currentPage: 1,
       pageSize: 6,
       totalCount: 0,
-      selectedOtdel: null,
-      selectedSecret: null,
+      selectedBirthday: null,
       isFiltering: false,
     };
   },
   methods: {
     async fetchPeople() {
       try {
-        const response = await fetch("http://localhost:8000/getperson");
+        const response = await fetch(
+          "http://26.48.35.87:8000/trudovaya_knizhka/latest"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-        this.people = data.people;
-        this.totalCount = data.total_count;
+        this.people = data;
+        this.totalCount = data.length;
         console.log(this.people);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -294,9 +277,6 @@ export default {
         console.error("Error deleting person:", error);
       }
     },
-    getImage(image_path) {
-      return `http://localhost:8000/inputs/people/${image_path}`;
-    },
     goToPage(page) {
       this.currentPage = page;
     },
@@ -311,8 +291,7 @@ export default {
       }
     },
     resetFilters() {
-      this.selectedOtdel = null;
-      this.selectedSecret = null;
+      this.selectedBirthday = null;
       this.selectedFilter = null;
       this.searchQuery = "";
       this.currentPage = 1;
@@ -328,21 +307,15 @@ export default {
 
       if (this.searchQuery.trim()) {
         filtered = filtered.filter((person) =>
-          person.surname
+          person.last_name
             .toLowerCase()
             .includes(this.searchQuery.trim().toLowerCase())
         );
       }
 
-      if (this.selectedOtdel !== null) {
+      if (this.selectedBirthday !== null) {
         filtered = filtered.filter(
-          (person) => person.otdel === this.selectedOtdel
-        );
-      }
-
-      if (this.selectedSecret !== null) {
-        filtered = filtered.filter(
-          (person) => person.secret === this.selectedSecret
+          (person) => person.birth_year === this.selectedBirthday
         );
       }
 
@@ -363,21 +336,15 @@ export default {
 
       if (this.searchQuery.trim()) {
         filtered = filtered.filter((person) =>
-          person.surname
+          person.last_name
             .toLowerCase()
             .includes(this.searchQuery.trim().toLowerCase())
         );
       }
 
-      if (this.selectedOtdel !== null) {
+      if (this.selectedBirthday !== null) {
         filtered = filtered.filter(
-          (person) => person.otdel === this.selectedOtdel
-        );
-      }
-
-      if (this.selectedSecret !== null) {
-        filtered = filtered.filter(
-          (person) => person.secret === this.selectedSecret
+          (person) => person.birth_year === this.selectedBirthday
         );
       }
 
@@ -402,13 +369,9 @@ export default {
       }
       return pages;
     },
-    uniqueOtdel() {
-      const departments = this.people.map((person) => person.otdel);
-      return [...new Set(departments)];
-    },
-    uniqueSecret() {
-      const Sec = this.people.map((person) => person.secret);
-      return [...new Set(Sec)];
+    uniqueBirthday() {
+      const years = this.people.map((person) => person.birth_year);
+      return [...new Set(years)];
     },
   },
 };

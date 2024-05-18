@@ -176,9 +176,7 @@ export default {
         console.error("Data:", error.response.data);
         console.error("Status:", error.response.status);
         console.error("Headers:", error.response.headers);
-        this.alertMessage = `Ошибка при отправке данных: ${
-          error.response.data.message || error.response.status
-        }`;
+        this.alertMessage = `Ошибка при отправке данных: ${error.response.status}`;
       } else if (error.request) {
         console.error("Request:", error.request);
         this.alertMessage = "Сервер не отвечает. Попробуйте позже.";

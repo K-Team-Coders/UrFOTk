@@ -7,15 +7,27 @@
       class="flex flex-col duration-500 justify-center ml-72 items-center w-full bg-frameBackground rounded-xl outline-dashed outline-[1px] outline-outlineColor mb-4"
     >
       <div class="flex pt-10">
-        <p
-          class="text-center text-4xl font-black text-activeText duration-500 pb-1"
-        >
+        <p class="text-center text-4xl font-black text-activeText duration-500">
           Трудовая книжка
         </p>
       </div>
-      <div class="text-neutral-50 flex gap-4 pb-4">
-        <p>Серия GP-4</p>
-        <p>Номер 1234567</p>
+      <div class="text-activeText flex gap-4 pb-8 pt-3">
+        <div class="relative h-11 w-full">
+          <input
+            v-model="personData.series"
+            placeholder="Например: AT-4"
+            :class="inputFieldClass"
+          />
+          <label :class="labelFieldClass"> Серия </label>
+        </div>
+        <div class="relative h-11 w-full">
+          <input
+            v-model="personData.number"
+            placeholder="Фамилия"
+            :class="inputFieldClass"
+          />
+          <label :class="labelFieldClass"> Номер </label>
+        </div>
       </div>
 
       <!-- Форма для сохранения данных -->
@@ -32,91 +44,46 @@
               <input
                 v-model="personData.lastName"
                 placeholder="Фамилия"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight dark:text-neutral-400 text-neutral-700 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Фамилия
-              </label>
+              <label :class="labelFieldClass"> Фамилия </label>
             </div>
             <!-- Имя -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.name"
+                v-model="personData.firstName"
                 placeholder="Имя"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Имя
-              </label>
+              <label :class="labelFieldClass"> Имя </label>
             </div>
             <!-- Отчество -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.patronymic"
                 placeholder="Отчество"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Отчество
-              </label>
+              <label :class="labelFieldClass"> Отчество </label>
             </div>
             <!-- Дата рождения -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.birthday"
                 placeholder="Дата рождения"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Дата рождения
-              </label>
+              <label :class="labelFieldClass"> Дата рождения </label>
             </div>
-            <!-- Образование -->
-            <div class="relative h-11 w-full">
-              <input
-                v-model="personData.education"
-                placeholder="Образование"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
-              />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Образование
-              </label>
-            </div>
-            <!-- Профессия, специальность -->
-            <div class="relative h-11 w-full">
-              <input
-                v-model="personData.profession"
-                placeholder="Профессия, специальность"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
-              />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Профессия, специальность
-              </label>
-            </div>
+
             <!-- Дата заполнения -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.fillDate"
                 placeholder="Дата заполнения"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Дата заполнения
-              </label>
+              <label :class="labelFieldClass"> Дата заполнения </label>
             </div>
           </div>
           <!-- Если происходила смена ФИО -->
@@ -128,109 +95,77 @@
               <input
                 v-model="personData.changeSurname"
                 placeholder="Фамилия"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Фамилия
-              </label>
+              <label :class="labelFieldClass"> Фамилия </label>
             </div>
             <!-- Имя -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.changeName"
                 placeholder="Имя"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Имя
-              </label>
+              <label :class="labelFieldClass"> Имя </label>
             </div>
             <!-- Отчество -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.changePatronymic"
                 placeholder="Отчество"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Отчество
-              </label>
+              <label :class="labelFieldClass"> Отчество </label>
             </div>
             <!-- Документ -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.changeDoc"
                 placeholder="Документ"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Документ
-              </label>
+              <label :class="labelFieldClass"> Документ </label>
             </div>
             <!-- Серия -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.docSerial"
                 placeholder="Серия"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Серия
-              </label>
+              <label :class="labelFieldClass"> Серия </label>
             </div>
             <!-- Номер -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.docNumber"
                 placeholder="Номер"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Номер
-              </label>
+              <label :class="labelFieldClass"> Номер </label>
             </div>
             <!-- Дата выдачи -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.deliveryDate"
                 placeholder="Дата выдачи"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Дата выдачи
-              </label>
+              <label :class="labelFieldClass"> Дата выдачи </label>
             </div>
             <!-- Кем выдано -->
             <div class="relative h-11 w-full">
               <input
                 v-model="personData.whoDelivery"
                 placeholder="Кем выдано"
-                class="peer h-full w-full border-b dark:border-neutral-200 border-neutral-900 bg-transparent pt-4 pb-2 font-sans text-lg font-normal text-activeText outline outline-0 transition-all placeholder-shown:border-neutral-400 placeholder:text-neutral-600 focus:border-neutral-200 focus:outline-0 disabled:border-0 disabled:bg-neutral-50 placeholder:opacity-0 focus:placeholder:opacity-100"
+                :class="inputFieldClass"
               />
-              <label
-                class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[14px] pt-1 font-normal leading-tight text-neutral-400 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-neutral-200 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] dark:peer-placeholder-shown:text-neutral-200 peer-placeholder-shown:text-neutral-700 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-neutral-300 peer-focus:after:scale-x-100 peer-focus:after:border-neutral-300 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-neutral-100"
-              >
-                Кем выдано
-              </label>
+              <label :class="labelFieldClass"> Кем выдано </label>
             </div>
           </div>
         </div>
 
-        <!-- Таблица "РАЗДЕЛ СВЕДЕНИЯ О РАБОТЕ" -->
+        <!-- Сведения о работе -->
         <p
           class="text-center text-4xl font-black text-activeText duration-500 py-4"
         >
@@ -324,15 +259,22 @@
             </tbody>
           </table>
         </div>
-
-        <!-- Таблица "РАЗДЕЛ СВЕДЕНИЯ О ПООЩРЕНИЯХ И НАГРАЖДЕНИЯХ" -->
+        <div class="flex justify-end">
+          <button
+            @click="addWorkRecord"
+            class="pr-1 text-sm text-activeText rounded"
+          >
+            Создать новую строку
+          </button>
+        </div>
+        <!-- Сведения о поощрениях и награждениях -->
         <p
           class="text-center text-4xl font-black text-activeText duration-500 py-4"
         >
           Сведения о поощрениях и награждениях
         </p>
         <div
-          class="w-full mb-4 shadow-md border-[1px] border-neutral-700 dark:border-neutral-200 rounded-xl sm:rounded-lg"
+          class="w-full shadow-md border-[1px] border-neutral-700 dark:border-neutral-200 rounded-xl sm:rounded-lg"
         >
           <table class="w-full text-sm text-neutral-500 dark:text-neutral-200">
             <thead
@@ -413,6 +355,14 @@
         </div>
         <div class="flex justify-end mb-4">
           <button
+            @click="addRewardRecord"
+            class="pr-1 text-sm text-activeText rounded"
+          >
+            Создать новую строку
+          </button>
+        </div>
+        <div class="flex justify-end mb-4">
+          <button
             class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-red-800 text-neutral-50 shadow-md shadow-red-600/10 hover:shadow-lg hover:shadow-red-600/20 active:opacity-[0.75] flex items-center gap-3"
             type="button"
           >
@@ -462,12 +412,13 @@ export default {
   data() {
     return {
       personData: {
+        id: "",
+        series: "",
+        number: "",
         lastName: "",
-        name: "",
+        firstName: "",
         patronymic: "",
         birthday: "",
-        education: "",
-        profession: "",
         fillDate: "",
         changeSurname: "",
         changeName: "",
@@ -478,25 +429,22 @@ export default {
         deliveryDate: "",
         whoDelivery: "",
       },
+
       workRecords: [
         {
-          startDate: "03.12.2024",
-          endDate: "04.12.2024",
-          sealExplanation:
-            "fugiat sed veniam dolorum dicta soluta. Perferendis distinctio amet temporibus vero.",
-          positionExplanation:
-            "ratione odio provident earum quibusdam vero, perferendis commodi vel libero a, quas placeat maiores optio inventore possimus!",
-          orderInfo: "Приказ",
+          startDate: "",
+          endDate: "",
+          sealExplanation: "",
+          positionExplanation: "",
+          orderInfo: "",
         },
       ],
       rewardRecords: [
         {
-          rewardDate: "03.12.2024",
-          sealExplanation:
-            "fugiat sed veniam dolorum dicta soluta. Perferendis distinctio amet temporibus vero.",
-          rewardExplanation:
-            "ratione odio provident earum quibusdam vero, perferendis commodi vel libero a, quas placeat maiores optio inventore possimus!",
-          orderInfo: "Приказ",
+          rewardDate: "",
+          sealExplanation: "",
+          rewardExplanation: "",
+          orderInfo: "",
         },
       ],
     };
@@ -507,6 +455,23 @@ export default {
     },
     updateRewardRecord(index, field, value) {
       this.rewardRecords[index][field] = value;
+    },
+    addWorkRecord() {
+      this.workRecords.push({
+        startDate: "",
+        endDate: "",
+        sealExplanation: "",
+        positionExplanation: "",
+        orderInfo: "",
+      });
+    },
+    addRewardRecord() {
+      this.rewardRecords.push({
+        rewardDate: "",
+        sealExplanation: "",
+        rewardExplanation: "",
+        orderInfo: "",
+      });
     },
     saveData() {
       // Здесь вы можете сохранить измененные данные
@@ -532,12 +497,30 @@ export default {
     // Проверка, если данные переданы через роут
     if (this.$route.state && this.$route.state.userData) {
       console.log("Received data:", this.$route.state.userData);
-      this.personData =
-        this.$route.state.userData.personData || this.personData;
-      this.workRecords =
-        this.$route.state.userData.workRecords || this.workRecords;
-      this.rewardRecords =
-        this.$route.state.userData.rewardRecords || this.rewardRecords;
+      this.personData.series = "";
+      this.personData.number = "";
+      this.personData.lastName = "";
+      this.personData.firstName = "";
+      this.personData.patronymic = "";
+      this.personData.birthday = "";
+      this.personData.fillDate = "";
+      this.personData.changeSurname = "";
+      this.personData.changeName = "";
+      this.personData.changePatronymic = "";
+      this.personData.changeDoc = "";
+      this.personData.docSerial = "";
+      this.personData.docNumber = "";
+      this.personData.deliveryDate = "";
+      this.personData.whoDelivery = "";
+      this.workRecords.startDate = "";
+      this.workRecords.endDate = "";
+      this.workRecords.sealExplanation = "";
+      this.workRecords.positionExplanation = "";
+      this.workRecords.orderInfo = "";
+      this.rewardRecords.rewardDate = "";
+      this.rewardRecords.sealExplanation = "";
+      this.rewardRecords.rewardExplanation = "";
+      this.rewardRecords.orderInfo = "";
     }
   },
   watch: {
@@ -549,6 +532,78 @@ export default {
         this.rewardRecords =
           to.state.userData.rewardRecords || this.rewardRecords;
       }
+    },
+  },
+  computed: {
+    inputFieldClass() {
+      return [
+        "peer",
+        "h-full",
+        "w-full",
+        "border-b",
+        "placeholder:text-base",
+        "dark:border-neutral-200",
+        "border-neutral-900",
+        "bg-transparent",
+        "pt-4",
+        "pb-2",
+        "font-sans",
+        "text-lg",
+        "font-normal",
+        "text-activeText",
+        "outline",
+        "outline-0",
+        "transition-all",
+        "placeholder-shown:border-neutral-400",
+        "placeholder:text-neutral-600",
+        "focus:border-neutral-200",
+        "focus:outline-0",
+        "disabled:border-0",
+        "disabled:bg-neutral-50",
+        "placeholder:opacity-0",
+        "focus:placeholder:opacity-100",
+      ];
+    },
+    labelFieldClass() {
+      return [
+        "pointer-events-none",
+        "absolute",
+        "left-0",
+        "-top-1.5",
+        "flex",
+        "h-full",
+        "w-full",
+        "select-none",
+        "!overflow-visible",
+        "truncate",
+        "text-[14px]",
+        "pt-1",
+        "font-normal",
+        "leading-tight",
+        "dark:text-neutral-400",
+        "text-neutral-700",
+        "transition-all",
+        "after:absolute",
+        "after:-bottom-1.5",
+        "after:block",
+        "after:w-full",
+        "after:scale-x-0",
+        "after:border-b-2",
+        "after:border-neutral-200",
+        "after:transition-transform",
+        "after:duration-300",
+        "peer-placeholder-shown:text-sm",
+        "peer-placeholder-shown:leading-[4.25]",
+        "dark:peer-placeholder-shown:text-neutral-200",
+        "peer-placeholder-shown:text-neutral-700",
+        "peer-focus:text-[11px]",
+        "peer-focus:leading-tight",
+        "peer-focus:text-neutral-300",
+        "peer-focus:after:scale-x-100",
+        "peer-focus:after:border-neutral-300",
+        "peer-disabled:text-transparent",
+        "peer-disabled:peer-placeholder-shown:text-neutral-100",
+      ];
     },
   },
 };
