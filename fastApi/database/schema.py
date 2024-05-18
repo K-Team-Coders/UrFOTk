@@ -1,11 +1,10 @@
-from datetime import date
 from typing import List, Optional
 
 from pydantic import BaseModel
 
 
 class WorkInfoBase(BaseModel):
-    date_of_hire: date
+    date_of_hire: str
     date_of_dismissal: Optional[str]
     stamp_description: str
     position_description: str
@@ -25,7 +24,7 @@ class WorkInfoOut(WorkInfoBase):
 
 
 class AwardInfoBase(BaseModel):
-    date: date
+    date: str
     stamp_description: str
     award_description: str
     order_number_date: str

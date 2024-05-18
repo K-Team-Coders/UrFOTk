@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -15,7 +15,7 @@ class TrudovayaKnizhka(Base):
     first_name = Column(String(50), nullable=False)
     middle_name = Column(String(50), nullable=True)
     birth_year = Column(String(10), nullable=False)
-    date_of_filling = Column(Date, nullable=False)
+    date_of_filling = Column(String(50), nullable=False)
 
     changed_last_name = Column(String(50), nullable=True)
     changed_first_name = Column(String(50), nullable=True)
@@ -49,7 +49,7 @@ class AwardInfo(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     trudovaya_knizhka_id = Column(Integer, ForeignKey('trudovaya_knizhka.id'), nullable=False)
-    date = Column(Date, nullable=False)
+    date = Column(String(20), nullable=False)
     stamp_description = Column(String(200), nullable=False)
     award_description = Column(String(500), nullable=False)
     order_number_date = Column(String(100), nullable=False)
