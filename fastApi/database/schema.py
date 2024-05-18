@@ -50,7 +50,7 @@ class TrudovayaKnizhkaBase(BaseModel):
     first_name: str
     middle_name: Optional[str]
     birth_year: str
-    date_of_filling: date
+    date_of_filling: str
     changed_last_name: Optional[str]
     changed_first_name: Optional[str]
     changed_middle_name: Optional[str]

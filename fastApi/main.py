@@ -6,6 +6,7 @@ from fastapi import FastAPI, Depends, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 from sqlalchemy.orm import Session
+from fastapi.responses import JSONResponse
 
 from fastApi.database import models
 from fastApi.database.connect import engine, get_db
@@ -62,7 +63,7 @@ def create_trudovaya_knizhka(trudovaya_knizhka: TrudovayaKnizhkaCreate, db: Sess
 
     db.commit()
     db.refresh(db_trudovaya_knizhka)
-    return db_trudovaya_knizhka
+    return JSONResponse("Success")
 
 
 @app.get("/trudovaya_knizhka/latest", response_model=List[TrudovayaKnizhkaOut])
