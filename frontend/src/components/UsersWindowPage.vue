@@ -408,6 +408,7 @@ export default {
   data() {
     return {
       trudovaya_knizhka: {
+        id: "",
         series: "",
         number: "",
         last_name: "",
@@ -446,9 +447,10 @@ export default {
   methods: {
     async submitData() {
       console.log(this.trudovaya_knizhka);
+      const id = this.$route.params.id;
       axios
-        .post(
-          "http://26.48.35.87:8000/trudovaya_knizhka/",
+        .put(
+          `http://26.48.35.87:8000/trudovaya_knizhka/${id}`,
           this.trudovaya_knizhka
         )
         .then((response) => {
@@ -483,83 +485,20 @@ export default {
         order_number_date: "",
       });
     },
-      saveData() {
-        // Prepare the data according to the expected model
-        const dataToSend = {
-          series: this.trudovaya_knizhka.series,
-          number: this.trudovaya_knizhka.number,
-          last_name: this.trudovaya_knizhka.last_name,
-          first_name: this.trudovaya_knizhka.first_name,
-          middle_name: this.trudovaya_knizhka.middle_name,
-          birth_year: this.trudovaya_knizhka.birth_year,
-          date_of_filling: this.trudovaya_knizhka.date_of_filling,
-          changed_last_name: this.trudovaya_knizhka.changed_last_name,
-          changed_first_name: this.trudovaya_knizhka.changed_first_name,
-          changed_middle_name: this.trudovaya_knizhka.changed_middle_name,
-          document_basis: this.trudovaya_knizhka.document_basis,
-          document_series: this.trudovaya_knizhka.document_series,
-          document_number: this.trudovaya_knizhka.document_number,
-          document_issue_date: this.trudovaya_knizhka.document_issue_date,
-          document_issued_by: this.trudovaya_knizhka.document_issued_by,
-          work_info: this.trudovaya_knizhka.work_info,
-          award_info: this.trudovaya_knizhka.award_info,
-        };
-      },
-    },
-    mounted() {
-      // Проверка, если данные переданы через роут
-      if (this.$route.state && this.$route.state.userData) {
-        console.log("Received data:", this.$route.state.userData);
-        const userData = this.$route.state.userData;
-        this.trudovaya_knizhka.series = userData.series || "";
-        this.trudovaya_knizhka.number = userData.number || "";
-        this.trudovaya_knizhka.last_name = userData.last_name || "";
-        this.trudovaya_knizhka.first_name = userData.first_name || "";
-        this.trudovaya_knizhka.middle_name = userData.middle_name || "";
-        this.trudovaya_knizhka.birth_year = userData.birth_year || "";
-        this.trudovaya_knizhka.date_of_filling = userData.date_of_filling || "";
-        this.trudovaya_knizhka.changed_last_name =
-          userData.changed_last_name || "";
-        this.trudovaya_knizhka.changed_first_name =
-          userData.changed_first_name || "";
-        this.trudovaya_knizhka.changed_middle_name =
-          userData.changed_middle_name || "";
-        this.trudovaya_knizhka.document_basis = userData.document_basis || "";
-        this.trudovaya_knizhka.document_series = userData.document_series || "";
-        this.trudovaya_knizhka.document_number = userData.document_number || "";
-        this.trudovaya_knizhka.document_issue_date =
-          userData.document_issue_date || "";
-        this.trudovaya_knizhka.document_issued_by =
-          userData.document_issued_by || "";
-        this.trudovaya_knizhka.work_info = userData.work_info || [
-          {
-            date_of_hire: "",
-            date_of_dismissal: "",
-            stamp_description: "",
-            position_description: "",
-            order_number_date: "",
-          },
-        ];
-        this.trudovaya_knizhka.award_info = userData.award_info || [
-          {
-            date: "",
-            stamp_description: "",
-            award_description: "",
-            order_number_date: "",
-          },
-        ];
+    async fetchTrudovayaKnizhka(id) {
+      try {
+        const response = await axios.get(
+          `http://26.48.35.87:8000/trudovaya_knizhka/${id}`
+        );
+        this.trudovaya_knizhka = response.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     },
-    watch: {
-      $route(to, from) {
-        if (to.state && to.state.userData) {
-          console.log("Route changed, received data:", to.state.userData);
-          this.trudovaya_knizhka =
-            to.state.userData.trudovaya_knizhka || this.trudovaya_knizhka;
-          this.work_info = to.state.userData.work_info || this.work_info;
-          this.award_info = to.state.userData.award_info || this.award_info;
-        }
-      },
+  },
+  async mounted() {
+    const id = this.$route.params.id;
+    await this.fetchTrudovayaKnizhka(id);
   },
   computed: {
     inputFieldClass() {

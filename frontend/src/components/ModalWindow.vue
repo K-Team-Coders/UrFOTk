@@ -132,11 +132,12 @@ export default {
             },
           }
         );
-        const userId = response.data.id;
+        console.log(response.data)
+        const userId = response.data.last_trudovaya_knizhka_id
+;
         this.$router.push({
           name: "UserDetails",
           params: { id: userId },
-          state: { userData: response.data },
         });
         this.alertType = "success";
         this.alertTitle = "Успешно";
