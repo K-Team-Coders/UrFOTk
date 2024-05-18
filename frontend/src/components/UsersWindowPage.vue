@@ -42,7 +42,7 @@
             <!-- Фамилия -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.lastName"
+                v-model="personData.last_name"
                 placeholder="Фамилия"
                 :class="inputFieldClass"
               />
@@ -51,7 +51,7 @@
             <!-- Имя -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.firstName"
+                v-model="personData.first_name"
                 placeholder="Имя"
                 :class="inputFieldClass"
               />
@@ -60,7 +60,7 @@
             <!-- Отчество -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.patronymic"
+                v-model="personData.middle_name"
                 placeholder="Отчество"
                 :class="inputFieldClass"
               />
@@ -69,7 +69,7 @@
             <!-- Дата рождения -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.birthday"
+                v-model="personData.birth_year"
                 placeholder="Дата рождения"
                 :class="inputFieldClass"
               />
@@ -79,7 +79,7 @@
             <!-- Дата заполнения -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.fillDate"
+                v-model="personData.date_of_filling"
                 placeholder="Дата заполнения"
                 :class="inputFieldClass"
               />
@@ -93,7 +93,7 @@
             </p>
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.changeSurname"
+                v-model="personData.changed_last_name"
                 placeholder="Фамилия"
                 :class="inputFieldClass"
               />
@@ -102,7 +102,7 @@
             <!-- Имя -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.changeName"
+                v-model="personData.changed_first_name"
                 placeholder="Имя"
                 :class="inputFieldClass"
               />
@@ -111,7 +111,7 @@
             <!-- Отчество -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.changePatronymic"
+                v-model="personData.changed_middle_name"
                 placeholder="Отчество"
                 :class="inputFieldClass"
               />
@@ -120,7 +120,7 @@
             <!-- Документ -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.changeDoc"
+                v-model="personData.document_basis"
                 placeholder="Документ"
                 :class="inputFieldClass"
               />
@@ -129,7 +129,7 @@
             <!-- Серия -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.docSerial"
+                v-model="personData.document_series"
                 placeholder="Серия"
                 :class="inputFieldClass"
               />
@@ -138,7 +138,7 @@
             <!-- Номер -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.docNumber"
+                v-model="personData.document_number"
                 placeholder="Номер"
                 :class="inputFieldClass"
               />
@@ -147,7 +147,7 @@
             <!-- Дата выдачи -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.deliveryDate"
+                v-model="personData.document_issue_date"
                 placeholder="Дата выдачи"
                 :class="inputFieldClass"
               />
@@ -156,7 +156,7 @@
             <!-- Кем выдано -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.whoDelivery"
+                v-model="personData.document_issued_by"
                 placeholder="Кем выдано"
                 :class="inputFieldClass"
               />
@@ -190,7 +190,7 @@
             </thead>
             <tbody class="text-center">
               <tr
-                v-for="(record, index) in workRecords"
+                v-for="(record, index) in personData.work_info"
                 :key="index"
                 class="bg-transparent text-neutral-800 dark:text-neutral-300 border-t dark:border-t-neutral-200 border-t-neutral-700 dark:border-neutral-700 dark:hover:bg-neutral-600"
               >
@@ -200,21 +200,25 @@
                   @input="
                     updateWorkRecord(
                       index,
-                      'startDate',
+                      'date_of_hire',
                       $event.target.innerText
                     )
                   "
                 >
-                  {{ record.startDate }}
+                  {{ record.date_of_hire }}
                 </td>
                 <td
                   class="px-6 py-4"
                   contenteditable
                   @input="
-                    updateWorkRecord(index, 'endDate', $event.target.innerText)
+                    updateWorkRecord(
+                      index,
+                      'date_of_dismissal',
+                      $event.target.innerText
+                    )
                   "
                 >
-                  {{ record.endDate }}
+                  {{ record.date_of_dismissal }}
                 </td>
                 <td
                   class="px-6 py-4 text-justify"
@@ -222,12 +226,12 @@
                   @input="
                     updateWorkRecord(
                       index,
-                      'sealExplanation',
+                      'stamp_description',
                       $event.target.innerText
                     )
                   "
                 >
-                  {{ record.sealExplanation }}
+                  {{ record.stamp_description }}
                 </td>
                 <td
                   class="px-6 py-4 text-justify"
@@ -235,12 +239,12 @@
                   @input="
                     updateWorkRecord(
                       index,
-                      'positionExplanation',
+                      'position_description',
                       $event.target.innerText
                     )
                   "
                 >
-                  {{ record.positionExplanation }}
+                  {{ record.position_description }}
                 </td>
                 <td
                   class="px-6 py-4 text-center"
@@ -248,12 +252,12 @@
                   @input="
                     updateWorkRecord(
                       index,
-                      'orderInfo',
+                      'order_number_date',
                       $event.target.innerText
                     )
                   "
                 >
-                  {{ record.orderInfo }}
+                  {{ record.order_number_date }}
                 </td>
               </tr>
             </tbody>
@@ -293,7 +297,7 @@
             </thead>
             <tbody class="text-center">
               <tr
-                v-for="(reward, index) in rewardRecords"
+                v-for="(reward, index) in personData.award_info"
                 :key="index"
                 class="bg-transparent text-neutral-800 dark:text-neutral-300 border-t dark:border-t-neutral-200 border-t-neutral-700 dark:border-neutral-700 dark:hover:bg-neutral-600"
               >
@@ -301,14 +305,10 @@
                   class="px-6 py-4"
                   contenteditable
                   @input="
-                    updateRewardRecord(
-                      index,
-                      'rewardDate',
-                      $event.target.innerText
-                    )
+                    updateRewardRecord(index, 'date', $event.target.innerText)
                   "
                 >
-                  {{ reward.rewardDate }}
+                  {{ reward.date }}
                 </td>
                 <td
                   class="px-6 py-4 text-justify"
@@ -316,12 +316,12 @@
                   @input="
                     updateRewardRecord(
                       index,
-                      'sealExplanation',
+                      'stamp_description',
                       $event.target.innerText
                     )
                   "
                 >
-                  {{ reward.sealExplanation }}
+                  {{ reward.stamp_description }}
                 </td>
                 <td
                   class="px-6 py-4 text-justify"
@@ -329,12 +329,12 @@
                   @input="
                     updateRewardRecord(
                       index,
-                      'rewardExplanation',
+                      'award_description',
                       $event.target.innerText
                     )
                   "
                 >
-                  {{ reward.rewardExplanation }}
+                  {{ reward.award_description }}
                 </td>
                 <td
                   class="px-6 py-4 text-center"
@@ -342,12 +342,12 @@
                   @input="
                     updateRewardRecord(
                       index,
-                      'orderInfo',
+                      'order_number_date',
                       $event.target.innerText
                     )
                   "
                 >
-                  {{ reward.orderInfo }}
+                  {{ reward.order_number_date }}
                 </td>
               </tr>
             </tbody>
@@ -363,6 +363,7 @@
         </div>
         <div class="flex justify-end mb-4">
           <button
+            @click="saveData()"
             class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-red-800 text-neutral-50 shadow-md shadow-red-600/10 hover:shadow-lg hover:shadow-red-600/20 active:opacity-[0.75] flex items-center gap-3"
             type="button"
           >
@@ -415,75 +416,73 @@ export default {
         id: "",
         series: "",
         number: "",
-        lastName: "",
-        firstName: "",
-        patronymic: "",
-        birthday: "",
-        fillDate: "",
-        changeSurname: "",
-        changeName: "",
-        changePatronymic: "",
-        changeDoc: "",
-        docSerial: "",
-        docNumber: "",
-        deliveryDate: "",
-        whoDelivery: "",
+        last_name: "",
+        first_name: "",
+        middle_name: "",
+        birth_year: "",
+        date_of_filling: "",
+        changed_last_name: "",
+        changed_first_name: "",
+        changed_middle_name: "",
+        document_basis: "",
+        document_series: "",
+        document_number: "",
+        document_issue_date: "",
+        document_issued_by: "",
+        work_info: [
+          {
+            date_of_hire: "",
+            date_of_dismissal: "",
+            stamp_description: "",
+            position_description: "",
+            order_number_date: "",
+          },
+        ],
+        award_info: [
+          {
+            date: "",
+            stamp_description: "",
+            award_description: "",
+            order_number_date: "",
+          },
+        ],
       },
-
-      workRecords: [
-        {
-          startDate: "",
-          endDate: "",
-          sealExplanation: "",
-          positionExplanation: "",
-          orderInfo: "",
-        },
-      ],
-      rewardRecords: [
-        {
-          rewardDate: "",
-          sealExplanation: "",
-          rewardExplanation: "",
-          orderInfo: "",
-        },
-      ],
     };
   },
   methods: {
     updateWorkRecord(index, field, value) {
-      this.workRecords[index][field] = value;
+      this.personData.work_info[index][field] = value;
     },
     updateRewardRecord(index, field, value) {
-      this.rewardRecords[index][field] = value;
+      this.personData.award_info[index][field] = value;
     },
     addWorkRecord() {
-      this.workRecords.push({
-        startDate: "",
-        endDate: "",
-        sealExplanation: "",
-        positionExplanation: "",
-        orderInfo: "",
+      this.personData.work_info.push({
+        date_of_hire: "",
+        date_of_dismissal: "",
+        stamp_description: "",
+        position_description: "",
+        order_number_date: "",
       });
     },
     addRewardRecord() {
-      this.rewardRecords.push({
-        rewardDate: "",
-        sealExplanation: "",
-        rewardExplanation: "",
-        orderInfo: "",
+      this.personData.award_info.push({
+        date: "",
+        stamp_description: "",
+        award_description: "",
+        order_number_date: "",
       });
     },
     saveData() {
       // Здесь вы можете сохранить измененные данные
-      console.log(this.workRecords);
-      console.log(this.rewardRecords);
+      console.log(this.personData.work_info);
+      console.log(this.personData.award_info);
+      console.log(this.personData)
 
       // Пример отправки данных на сервер
       axios
-        .post("http://your-server-url/api/save", {
+        .post("http://26.48.35.87:8000/trudovaya_knizhka/", {
           personData: this.personData,
-          workRecords: this.workRecords,
-          rewardRecords: this.rewardRecords,
         })
         .then((response) => {
           console.log(response.data);
@@ -499,28 +498,28 @@ export default {
       console.log("Received data:", this.$route.state.userData);
       this.personData.series = "";
       this.personData.number = "";
-      this.personData.lastName = "";
-      this.personData.firstName = "";
-      this.personData.patronymic = "";
-      this.personData.birthday = "";
-      this.personData.fillDate = "";
-      this.personData.changeSurname = "";
-      this.personData.changeName = "";
-      this.personData.changePatronymic = "";
-      this.personData.changeDoc = "";
-      this.personData.docSerial = "";
-      this.personData.docNumber = "";
-      this.personData.deliveryDate = "";
-      this.personData.whoDelivery = "";
-      this.workRecords.startDate = "";
-      this.workRecords.endDate = "";
-      this.workRecords.sealExplanation = "";
-      this.workRecords.positionExplanation = "";
-      this.workRecords.orderInfo = "";
-      this.rewardRecords.rewardDate = "";
-      this.rewardRecords.sealExplanation = "";
-      this.rewardRecords.rewardExplanation = "";
-      this.rewardRecords.orderInfo = "";
+      this.personData.last_name = "";
+      this.personData.first_name = "";
+      this.personData.middle_name = "";
+      this.personData.birth_year = "";
+      this.personData.date_of_filling = "";
+      this.personData.changed_last_name = "";
+      this.personData.changed_first_name = "";
+      this.personData.changed_middle_name = "";
+      this.personData.document_basis = "";
+      this.personData.document_series = "";
+      this.personData.document_number = "";
+      this.personData.document_issue_date = "";
+      this.personData.document_issued_by = "";
+      this.personData.work_info.date_of_hire = "";
+      this.personData.work_info.date_of_dismissal = "";
+      this.personData.work_info.stamp_description = "";
+      this.personData.work_info.position_description = "";
+      this.personData.work_info.order_number_date = "";
+      this.personData.award_info.date = "";
+      this.personData.award_info.stamp_description = "";
+      this.personData.award_info.award_description = "";
+      this.personData.award_info.order_number_date = "";
     }
   },
   watch: {
@@ -528,9 +527,8 @@ export default {
       if (to.state && to.state.userData) {
         console.log("Route changed, received data:", to.state.userData);
         this.personData = to.state.userData.personData || this.personData;
-        this.workRecords = to.state.userData.workRecords || this.workRecords;
-        this.rewardRecords =
-          to.state.userData.rewardRecords || this.rewardRecords;
+        this.work_info = to.state.userData.work_info || this.work_info;
+        this.award_info = to.state.userData.award_info || this.award_info;
       }
     },
   },
