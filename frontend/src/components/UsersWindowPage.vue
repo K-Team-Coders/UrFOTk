@@ -14,7 +14,7 @@
       <div class="text-activeText flex gap-4 pb-8 pt-3">
         <div class="relative h-11 w-full">
           <input
-            v-model="personData.series"
+            v-model="trudovaya_knizhka.series"
             placeholder="Например: AT-4"
             :class="inputFieldClass"
           />
@@ -22,7 +22,7 @@
         </div>
         <div class="relative h-11 w-full">
           <input
-            v-model="personData.number"
+            v-model="trudovaya_knizhka.number"
             placeholder="Фамилия"
             :class="inputFieldClass"
           />
@@ -42,7 +42,7 @@
             <!-- Фамилия -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.last_name"
+                v-model="trudovaya_knizhka.last_name"
                 placeholder="Фамилия"
                 :class="inputFieldClass"
               />
@@ -51,7 +51,7 @@
             <!-- Имя -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.first_name"
+                v-model="trudovaya_knizhka.first_name"
                 placeholder="Имя"
                 :class="inputFieldClass"
               />
@@ -60,7 +60,7 @@
             <!-- Отчество -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.middle_name"
+                v-model="trudovaya_knizhka.middle_name"
                 placeholder="Отчество"
                 :class="inputFieldClass"
               />
@@ -69,7 +69,7 @@
             <!-- Дата рождения -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.birth_year"
+                v-model="trudovaya_knizhka.birth_year"
                 placeholder="Дата рождения"
                 :class="inputFieldClass"
               />
@@ -79,7 +79,7 @@
             <!-- Дата заполнения -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.date_of_filling"
+                v-model="trudovaya_knizhka.date_of_filling"
                 placeholder="Дата заполнения"
                 :class="inputFieldClass"
               />
@@ -93,7 +93,7 @@
             </p>
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.changed_last_name"
+                v-model="trudovaya_knizhka.changed_last_name"
                 placeholder="Фамилия"
                 :class="inputFieldClass"
               />
@@ -102,7 +102,7 @@
             <!-- Имя -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.changed_first_name"
+                v-model="trudovaya_knizhka.changed_first_name"
                 placeholder="Имя"
                 :class="inputFieldClass"
               />
@@ -111,7 +111,7 @@
             <!-- Отчество -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.changed_middle_name"
+                v-model="trudovaya_knizhka.changed_middle_name"
                 placeholder="Отчество"
                 :class="inputFieldClass"
               />
@@ -120,7 +120,7 @@
             <!-- Документ -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.document_basis"
+                v-model="trudovaya_knizhka.document_basis"
                 placeholder="Документ"
                 :class="inputFieldClass"
               />
@@ -129,7 +129,7 @@
             <!-- Серия -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.document_series"
+                v-model="trudovaya_knizhka.document_series"
                 placeholder="Серия"
                 :class="inputFieldClass"
               />
@@ -138,7 +138,7 @@
             <!-- Номер -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.document_number"
+                v-model="trudovaya_knizhka.document_number"
                 placeholder="Номер"
                 :class="inputFieldClass"
               />
@@ -147,7 +147,7 @@
             <!-- Дата выдачи -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.document_issue_date"
+                v-model="trudovaya_knizhka.document_issue_date"
                 placeholder="Дата выдачи"
                 :class="inputFieldClass"
               />
@@ -156,7 +156,7 @@
             <!-- Кем выдано -->
             <div class="relative h-11 w-full">
               <input
-                v-model="personData.document_issued_by"
+                v-model="trudovaya_knizhka.document_issued_by"
                 placeholder="Кем выдано"
                 :class="inputFieldClass"
               />
@@ -190,7 +190,7 @@
             </thead>
             <tbody class="text-center">
               <tr
-                v-for="(record, index) in personData.work_info"
+                v-for="(record, index) in trudovaya_knizhka.work_info"
                 :key="index"
                 class="bg-transparent text-neutral-800 dark:text-neutral-300 border-t dark:border-t-neutral-200 border-t-neutral-700 dark:border-neutral-700 dark:hover:bg-neutral-600"
               >
@@ -297,7 +297,7 @@
             </thead>
             <tbody class="text-center">
               <tr
-                v-for="(reward, index) in personData.award_info"
+                v-for="(reward, index) in trudovaya_knizhka.award_info"
                 :key="index"
                 class="bg-transparent text-neutral-800 dark:text-neutral-300 border-t dark:border-t-neutral-200 border-t-neutral-700 dark:border-neutral-700 dark:hover:bg-neutral-600"
               >
@@ -412,8 +412,7 @@ export default {
   },
   data() {
     return {
-      personData: {
-        id: "",
+      trudovaya_knizhka: {
         series: "",
         number: "",
         last_name: "",
@@ -451,13 +450,13 @@ export default {
   },
   methods: {
     updateWorkRecord(index, field, value) {
-      this.personData.work_info[index][field] = value;
+      this.trudovaya_knizhka.work_info[index][field] = value;
     },
     updateRewardRecord(index, field, value) {
-      this.personData.award_info[index][field] = value;
+      this.trudovaya_knizhka.award_info[index][field] = value;
     },
     addWorkRecord() {
-      this.personData.work_info.push({
+      this.trudovaya_knizhka.work_info.push({
         date_of_hire: "",
         date_of_dismissal: "",
         stamp_description: "",
@@ -466,7 +465,7 @@ export default {
       });
     },
     addRewardRecord() {
-      this.personData.award_info.push({
+      this.trudovaya_knizhka.award_info.push({
         date: "",
         stamp_description: "",
         award_description: "",
@@ -475,14 +474,14 @@ export default {
     },
     saveData() {
       // Здесь вы можете сохранить измененные данные
-      console.log(this.personData.work_info);
-      console.log(this.personData.award_info);
-      console.log(this.personData)
+      console.log(this.trudovaya_knizhka.work_info);
+      console.log(this.trudovaya_knizhka.award_info);
+      console.log(this.trudovaya_knizhka)
 
       // Пример отправки данных на сервер
       axios
         .post("http://26.48.35.87:8000/trudovaya_knizhka/", {
-          personData: this.personData,
+          trudovaya_knizhka: this.trudovaya_knizhka,
         })
         .then((response) => {
           console.log(response.data);
@@ -496,37 +495,37 @@ export default {
     // Проверка, если данные переданы через роут
     if (this.$route.state && this.$route.state.userData) {
       console.log("Received data:", this.$route.state.userData);
-      this.personData.series = "";
-      this.personData.number = "";
-      this.personData.last_name = "";
-      this.personData.first_name = "";
-      this.personData.middle_name = "";
-      this.personData.birth_year = "";
-      this.personData.date_of_filling = "";
-      this.personData.changed_last_name = "";
-      this.personData.changed_first_name = "";
-      this.personData.changed_middle_name = "";
-      this.personData.document_basis = "";
-      this.personData.document_series = "";
-      this.personData.document_number = "";
-      this.personData.document_issue_date = "";
-      this.personData.document_issued_by = "";
-      this.personData.work_info.date_of_hire = "";
-      this.personData.work_info.date_of_dismissal = "";
-      this.personData.work_info.stamp_description = "";
-      this.personData.work_info.position_description = "";
-      this.personData.work_info.order_number_date = "";
-      this.personData.award_info.date = "";
-      this.personData.award_info.stamp_description = "";
-      this.personData.award_info.award_description = "";
-      this.personData.award_info.order_number_date = "";
+      this.trudovaya_knizhka.series = "";
+      this.trudovaya_knizhka.number = "";
+      this.trudovaya_knizhka.last_name = "";
+      this.trudovaya_knizhka.first_name = "";
+      this.trudovaya_knizhka.middle_name = "";
+      this.trudovaya_knizhka.birth_year = "";
+      this.trudovaya_knizhka.date_of_filling = "";
+      this.trudovaya_knizhka.changed_last_name = "";
+      this.trudovaya_knizhka.changed_first_name = "";
+      this.trudovaya_knizhka.changed_middle_name = "";
+      this.trudovaya_knizhka.document_basis = "";
+      this.trudovaya_knizhka.document_series = "";
+      this.trudovaya_knizhka.document_number = "";
+      this.trudovaya_knizhka.document_issue_date = "";
+      this.trudovaya_knizhka.document_issued_by = "";
+      this.trudovaya_knizhka.work_info.date_of_hire = "";
+      this.trudovaya_knizhka.work_info.date_of_dismissal = "";
+      this.trudovaya_knizhka.work_info.stamp_description = "";
+      this.trudovaya_knizhka.work_info.position_description = "";
+      this.trudovaya_knizhka.work_info.order_number_date = "";
+      this.trudovaya_knizhka.award_info.date = "";
+      this.trudovaya_knizhka.award_info.stamp_description = "";
+      this.trudovaya_knizhka.award_info.award_description = "";
+      this.trudovaya_knizhka.award_info.order_number_date = "";
     }
   },
   watch: {
     $route(to, from) {
       if (to.state && to.state.userData) {
         console.log("Route changed, received data:", to.state.userData);
-        this.personData = to.state.userData.personData || this.personData;
+        this.trudovaya_knizhka = to.state.userData.trudovaya_knizhka || this.trudovaya_knizhka;
         this.work_info = to.state.userData.work_info || this.work_info;
         this.award_info = to.state.userData.award_info || this.award_info;
       }
