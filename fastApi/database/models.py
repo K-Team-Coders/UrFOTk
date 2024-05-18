@@ -14,7 +14,7 @@ class TrudovayaKnizhka(Base):
     last_name = Column(String(50), nullable=False)
     first_name = Column(String(50), nullable=False)
     middle_name = Column(String(50), nullable=True)
-    birth_year = Column(Integer, nullable=False)
+    birth_year = Column(String(10), nullable=False)
     date_of_filling = Column(Date, nullable=False)
 
     changed_last_name = Column(String(50), nullable=True)
@@ -23,7 +23,7 @@ class TrudovayaKnizhka(Base):
     document_basis = Column(String(100), nullable=True)
     document_series = Column(String(10), nullable=True)
     document_number = Column(String(20), nullable=True)
-    document_issue_date = Column(Date, nullable=True)
+    document_issue_date = Column(String(10), nullable=True)
     document_issued_by = Column(String(100), nullable=True)
 
     work_info = relationship("WorkInfo", back_populates="trudovaya_knizhka")
@@ -31,12 +31,12 @@ class TrudovayaKnizhka(Base):
 
 
 class WorkInfo(Base):
-    __tablename__ = 'work_info'
+    __tablename__ = 'worker_info'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     trudovaya_knizhka_id = Column(Integer, ForeignKey('trudovaya_knizhka.id'), nullable=False)
-    date_of_hire = Column(Date, nullable=False)
-    date_of_dismissal = Column(Date, nullable=True)
+    date_of_hire = Column(String(20), nullable=False)
+    date_of_dismissal = Column(String(20), nullable=True)
     stamp_description = Column(String(200), nullable=False)
     position_description = Column(String(200), nullable=False)
     order_number_date = Column(String(100), nullable=False)
